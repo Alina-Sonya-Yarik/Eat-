@@ -46,26 +46,6 @@ function getViewportBucket(viewportWidth) {
     return 'desktop';
 }
 
-function getTargetTopClearance(viewportWidth) {
-    if (viewportWidth <= 480) {
-        return 208;
-    }
-
-    if (viewportWidth <= 834) {
-        return 240;
-    }
-
-    if (viewportWidth <= 1194) {
-        return 240;
-    }
-
-    if (viewportWidth <= 1440) {
-        return 272;
-    }
-
-    return 272;
-}
-
 function getTargetBottomClearance(viewportWidth) {
     if (viewportWidth <= 480) {
         return 64;
@@ -86,10 +66,6 @@ function getTargetBottomClearance(viewportWidth) {
     return 128;
 }
 
-function shouldAdjustTopPadding(section) {
-    return section.classList.contains('cashback');
-}
-
 function getBasePaddingCacheKey(section, viewportWidth) {
     return `${getViewportBucket(viewportWidth)}::${section.tagName}::${section.className}`;
 }
@@ -100,10 +76,6 @@ function getSectionClassList(section) {
 
 function measureBasePaddingBottom(section, viewportWidth) {
     return measureBasePadding(section, viewportWidth).bottom;
-}
-
-function measureBasePaddingTop(section, viewportWidth) {
-    return measureBasePadding(section, viewportWidth).top;
 }
 
 function measureBasePadding(section, viewportWidth) {
@@ -213,35 +185,15 @@ function adjustSectionPadding(section, viewportWidth) {
     }
 
     const basePaddingBottom = measureBasePaddingBottom(section, viewportWidth);
-    const basePaddingTop = measureBasePaddingTop(section, viewportWidth);
-    const targetTopClearance = getTargetTopClearance(viewportWidth);
     const targetClearance = getTargetBottomClearance(viewportWidth);
     const { sectionRect, maxBottom, minTop } = getMaxMeasuredBottom(section, targets);
-    const currentComputedPaddingTop = parseFloat(window.getComputedStyle(section).paddingTop) || 0;
     const currentComputedPaddingBottom = parseFloat(window.getComputedStyle(section).paddingBottom) || 0;
 
     if (maxBottom === -Infinity || minTop === Infinity) {
         return;
     }
 
-    let projectedSectionHeight = sectionRect.height;
-
-    if (shouldAdjustTopPadding(section)) {
-        const topOverflow = Math.max(0, -minTop);
-        const nextPaddingTop = Math.round(Math.max(basePaddingTop, targetTopClearance) + topOverflow);
-        const currentInlinePaddingTop = getInlinePadding(section, 'paddingTop');
-        const paddingTopDelta = nextPaddingTop - currentComputedPaddingTop;
-
-        if (paddingTopDelta > 0) {
-            projectedSectionHeight += paddingTopDelta;
-        }
-
-        if (currentInlinePaddingTop === null || Math.abs(currentInlinePaddingTop - nextPaddingTop) > EPSILON) {
-            section.style.paddingTop = `${nextPaddingTop}px`;
-        }
-    }
-
-    const visualContentBottom = projectedSectionHeight - currentComputedPaddingBottom;
+    const visualContentBottom = sectionRect.height - currentComputedPaddingBottom;
     const imageOverflow = Math.max(0, maxBottom - visualContentBottom);
     const nextPaddingBottom = Math.round(Math.max(basePaddingBottom, targetClearance) + imageOverflow);
     const currentInlinePaddingBottom = getInlinePadding(section, 'paddingBottom');
