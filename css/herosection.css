@@ -9,7 +9,7 @@
     border-radius: 0 0 70px 70px;
     display: flex;
     align-items: center;
-    transition: padding-bottom 240ms ease;
+    /* transition: padding-bottom 240ms ease; */
 }
 
 .hero-section .container {
