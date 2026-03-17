@@ -1,0 +1,123 @@
+/* Design Tokens */
+:root {
+    /* Typography */
+    --font-heading: "Geologica", "Geologica-ExtraBold", Helvetica, sans-serif;
+    --font-body: "Stapel", "Stapel Medium", "Stapel Bold", Helvetica, sans-serif;
+
+    /* Colors */
+    --color-primary: #d01651;
+    --color-bg-base: #fefde2;
+    --color-bg-hero: #f7ed4d;
+    --color-bg-dark: #181818;
+    --color-bg-purple: #a065ff;
+    --color-bg-red: #db261b;
+    --color-white: #ffffff;
+    --color-black: #000000;
+}
+
+/* Base Reset */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-white);
+    font-family: var(--font-body);
+    font-weight: 500;
+}
+
+.page-wrapper {
+    width: 100%;
+    position: relative;
+    overflow: clip;
+}
+
+section {
+    padding: 272px 0 128px 0;
+    width: 100%;
+    position: relative;
+    overflow: clip;
+}
+
+.container {
+    max-width: 1920px;
+    padding: 0 80px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.grid-12 {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 16px;
+}
+
+p {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Typography fix for word wrapping */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+span {
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+}
+
+/* Короткое слово (1–3 буквы) не отрывать от следующего — скрипт typography.js */
+.typo-nowrap {
+    white-space: nowrap;
+}
+
+/* --- Media Queries --- */
+
+@media (max-width: 1440px) {
+    .container {
+        padding: 0 60px;
+    }
+}
+
+@media (max-width: 1194px) {
+    /* No specific changes in globals.css for 1194px yet */
+}
+
+@media (max-width: 834px) {
+    .container {
+        padding: 0 32px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 16px;
+    }
+
+    .grid-12 {
+        gap: 16px;
+    }
+}

@@ -1,0 +1,112 @@
+.popular-restaurants {
+    background-color: var(--color-primary);
+    border-radius: 0 0 70px 70px;
+    padding: 272px 0 128px 0;
+    margin-top: -144px;
+    z-index: 6;
+    position: relative;
+}
+
+.popular-restaurants-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    row-gap: 40px;
+}
+
+.popular-header {
+    grid-column: span 12;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.popular-title {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    color: var(--color-white);
+    font-size: 70px;
+    line-height: 84px;
+    margin: 0;
+}
+
+.popular-description {
+    font-family: var(--font-body);
+    font-weight: 500;
+    color: var(--color-white);
+    font-size: 30px;
+    line-height: 36px;
+    margin: 0;
+    text-align: right;
+    max-width: 892px;
+}
+
+.popular-slider-container {
+    grid-column: span 12;
+    width: 100%;
+    overflow: visible;
+}
+
+.popular-slider {
+    display: flex;
+    gap: 20px;
+}
+
+.popular-restaurant-card {
+    min-width: 480px;
+    height: 480px;
+    background-color: var(--color-white);
+    border-radius: 70px;
+}
+
+.popular-controls {
+    grid-column: span 12;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+.popular-next-button,
+.popular-back-button {
+    width: auto;
+    height: 115px;
+    padding: 0 65px;
+    border-radius: 48px;
+    border: 4px solid var(--color-black);
+    background-color: var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.popular-back-button {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-color: #424242;
+}
+
+/* --- Media Queries --- */
+
+@media (max-width: 1440px) {
+    /* No specific changes for 1440px yet */
+}
+
+@media (max-width: 1194px) {
+    /* No specific changes for 1194px yet */
+}
+
+@media (max-width: 834px) {
+    .popular-header {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .popular-description {
+        text-align: left;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* No specific changes for 480px yet */
+}

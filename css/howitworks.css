@@ -1,0 +1,93 @@
+.how-it-works {
+    background-color: var(--color-bg-purple);
+    border-radius: 0 0 70px 70px;
+    padding: 272px 0 128px 0;
+    margin-top: -144px;
+    z-index: 7;
+    position: relative;
+}
+
+.how-it-works-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    row-gap: 80px;
+    column-gap: 20px;
+}
+
+.how-title {
+    grid-column: span 12;
+    font-family: var(--font-heading);
+    font-weight: 800;
+    color: var(--color-white);
+    font-size: 70px;
+    margin: 0;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.how-step {
+    grid-column: span 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 30px;
+}
+
+.how-step-number {
+    font-family: var(--font-body);
+    font-weight: 700;
+    color: var(--color-white);
+    font-size: 150px;
+    line-height: 1;
+}
+
+.how-step-description {
+    font-family: var(--font-body);
+    font-weight: 500;
+    color: var(--color-white);
+    font-size: 30px;
+    line-height: 36px;
+    min-height: 72px;
+}
+
+.how-step-image {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.how-description {
+    grid-column: span 12;
+    font-family: var(--font-body);
+    font-weight: 500;
+    color: var(--color-white);
+    font-size: 30px;
+    line-height: 1.2;
+    text-align: left;
+    margin-top: 40px;
+}
+
+/* --- Media Queries --- */
+
+@media (max-width: 1440px) {
+    /* No specific changes for 1440px yet */
+}
+
+@media (max-width: 1194px) {
+    /* No specific changes for 1194px yet */
+}
+
+@media (max-width: 834px) {
+    .how-step {
+        grid-column: span 6;
+    }
+}
+
+@media (max-width: 480px) {
+    .how-step {
+        grid-column: span 12;
+    }
+}

@@ -1,0 +1,129 @@
+.download {
+    background-color: #472184;
+    color: var(--color-white);
+    position: relative;
+    overflow: hidden;
+    padding: 272px 0 128px 0;
+    border-radius: 0 0 70px 70px;
+    margin-top: -144px;
+    z-index: 5;
+}
+
+.download-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    align-items: center;
+    row-gap: 40px;
+}
+
+.download-header {
+    grid-column: 1 / span 12;
+    text-align: left;
+}
+
+.download-title {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    color: var(--color-white);
+    font-size: 70px;
+    line-height: 1.1;
+    margin-bottom: 48px;
+    text-transform: uppercase;
+}
+
+.download-subtitle {
+    font-family: var(--font-body);
+    font-weight: 500;
+    color: var(--color-white);
+    font-size: 30px;
+    line-height: 1.2;
+    margin-bottom: 24px;
+}
+
+.download-bonus {
+    font-family: var(--font-body);
+    font-weight: 500;
+    color: var(--color-white);
+    font-size: 30px;
+    line-height: 1.2;
+    margin: 0;
+}
+
+.download-content {
+    grid-column: 1 / span 12;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.download-left-elements {
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+    position: relative;
+}
+
+.download-mockups {
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+    z-index: 10;
+}
+
+.download-mockup-1 {
+    margin-left: -120px;
+    position: relative;
+    z-index: 2;
+}
+
+.download-mockup-2 {
+    position: relative;
+    z-index: 5;
+}
+
+.download-buttons {
+    display: flex;
+    gap: 16px;
+    padding-left: 40px;
+    margin-top: -224px;
+    z-index: 50;
+}
+
+.download-mascot-wrapper {
+    position: relative;
+    z-index: 1;
+}
+
+.download-gift-heart {
+    width: 718px;
+    height: 922px;
+    object-fit: cover;
+    display: block;
+}
+
+/* --- Media Queries --- */
+
+@media (max-width: 1440px) {
+    /* No specific changes for 1440px yet */
+}
+
+@media (max-width: 1194px) {
+    /* No specific changes for 1194px yet */
+}
+
+@media (max-width: 834px) {
+    .download-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .download-buttons {
+        margin-top: 20px;
+        padding-left: 0;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    /* No specific changes for 480px yet */
+}
