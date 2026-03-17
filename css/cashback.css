@@ -3,6 +3,8 @@
     --cashback-copy-rotate: -6deg;
     --cashback-copy-size: clamp(18px, 1.7vw + 8px, 30px);
     --cashback-copy-line-height: 1.12;
+    --cashback-ticket-shift-up: clamp(-84px, -5.2vw, -40px);
+    --cashback-ticket-space-after: clamp(44px, 5vw, 96px);
     --cashback-ticket-top-inset: 7.5%;
     --cashback-ticket-right-inset: 27.5%;
     --cashback-ticket-bottom-inset: 9%;
@@ -60,6 +62,8 @@
     max-width: 1760px;
     aspect-ratio: 1762 / 691;
     margin: 0 auto;
+    margin-top: var(--cashback-ticket-shift-up);
+    margin-bottom: var(--cashback-ticket-space-after);
     justify-self: center;
     transform: rotate(var(--cashback-ticket-rotate));
     transform-origin: center center;
@@ -108,13 +112,13 @@
 }
 
 .cashback-mascot {
-    grid-column: 8 / span 5;
-    grid-row: 2;
+    grid-column: 7 / span 6;
+    grid-row: 4;
     width: var(--cashback-mascot-width);
     height: auto;
     justify-self: end;
-    align-self: end;
-    transform: translate(6%, 34%);
+    align-self: start;
+    transform: translate(0, 0);
     z-index: 10;
     pointer-events: none;
     display: block;
@@ -138,16 +142,14 @@
     .cashback-lower-text {
         max-width: min(980px, 94%);
     }
-
-    .cashback-mascot {
-        transform: translate(4%, 28%);
-    }
 }
 
 @media (max-width: 1194px) {
     .cashback {
         --cashback-ticket-rotate: -5deg;
         --cashback-copy-rotate: -5deg;
+        --cashback-ticket-shift-up: clamp(-66px, -4.2vw, -30px);
+        --cashback-ticket-space-after: clamp(36px, 4.5vw, 76px);
         --cashback-ticket-top-inset: 8%;
         --cashback-ticket-right-inset: 24%;
         --cashback-ticket-bottom-inset: 10%;
@@ -167,7 +169,7 @@
 
     .cashback-mascot {
         grid-column: 1 / span 12;
-        grid-row: 3;
+        grid-row: 4;
         width: clamp(240px, 34vw, 360px);
         justify-self: center;
         align-self: start;
@@ -175,7 +177,7 @@
     }
 
     .cashback-lower-text {
-        grid-row: 4;
+        grid-row: 3;
     }
 }
 
@@ -183,6 +185,8 @@
     .cashback {
         --cashback-ticket-rotate: -4deg;
         --cashback-copy-rotate: -4deg;
+        --cashback-ticket-shift-up: clamp(-44px, -3vw, -18px);
+        --cashback-ticket-space-after: clamp(28px, 3.5vw, 52px);
         --cashback-ticket-top-inset: 8.5%;
         --cashback-ticket-right-inset: 22%;
         --cashback-ticket-bottom-inset: 10.5%;
@@ -197,7 +201,7 @@
 
     .cashback-mascot {
         width: clamp(220px, 38vw, 300px);
-        justify-self: end;
+        justify-self: center;
     }
 }
 
@@ -205,6 +209,8 @@
     .cashback {
         --cashback-ticket-rotate: -3deg;
         --cashback-copy-rotate: -3deg;
+        --cashback-ticket-shift-up: clamp(-24px, -1.8vw, -10px);
+        --cashback-ticket-space-after: clamp(20px, 3vw, 36px);
         --cashback-ticket-top-inset: 9%;
         --cashback-ticket-right-inset: 20%;
         --cashback-ticket-bottom-inset: 11%;
