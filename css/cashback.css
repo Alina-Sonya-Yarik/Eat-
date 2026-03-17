@@ -1,4 +1,18 @@
 .cashback {
+    --cashback-ticket-rotate: -6deg;
+    --cashback-copy-rotate: -6deg;
+    --cashback-copy-size: clamp(18px, 1.7vw + 8px, 30px);
+    --cashback-copy-line-height: 1.12;
+    --cashback-ticket-top-inset: 7.5%;
+    --cashback-ticket-right-inset: 27.5%;
+    --cashback-ticket-bottom-inset: 9%;
+    --cashback-ticket-left-inset: 7.25%;
+    --cashback-ticket-label-size: clamp(40px, 11.5vw, 208px);
+    --cashback-ticket-label-line-height: 0.9;
+    --cashback-ticket-value-size: clamp(84px, 25.5vw, 448px);
+    --cashback-ticket-value-line-height: 0.84;
+    --cashback-ticket-value-offset: clamp(-8px, -0.9vw, -20px);
+    --cashback-mascot-width: clamp(320px, 30vw, 560px);
     background-color: var(--color-bg-red);
     color: var(--color-white);
     padding: 272px 0 128px 0;
@@ -14,138 +28,165 @@
 
 .cashback-grid {
     grid-template-rows: auto auto auto;
-    row-gap: 32px;
+    row-gap: clamp(16px, 2vw, 32px);
+    align-items: start;
 }
 
-.cashback-upper-text {
+.cashback-upper-text,
+.cashback-lower-text {
     grid-column: 1 / span 12;
     font-family: var(--font-body);
     font-weight: 500;
     color: var(--color-white);
-    font-size: 30px;
-    transform: rotate(-6deg);
+    font-size: var(--cashback-copy-size);
+    line-height: var(--cashback-copy-line-height);
+    transform: rotate(var(--cashback-copy-rotate));
+    transform-origin: left top;
     text-align: left;
+    max-width: min(1060px, 92%);
+    position: relative;
     z-index: 5;
+}
+
+.cashback-upper-text {
+    grid-row: 1;
 }
 
 .cashback-ticket-container {
     grid-column: 1 / span 12;
-    rotate: -6deg;
     grid-row: 2;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
     position: relative;
     width: 100%;
     max-width: 1760px;
+    aspect-ratio: 1762 / 691;
     margin: 0 auto;
-    place-items: start center;
+    justify-self: center;
+    transform: rotate(var(--cashback-ticket-rotate));
+    transform-origin: center center;
     z-index: 2;
 }
 
 .cashback-ticket-bg {
-    grid-column: 1;
-    grid-row: 1;
+    position: absolute;
+    inset: 0;
     width: 100%;
-    max-width: 1760px;
-    height: auto;
+    height: 100%;
+    object-fit: contain;
 }
 
 .cashback-ticket-content {
-    grid-column: 1;
-    grid-row: 1;
+    position: absolute;
+    inset: var(--cashback-ticket-top-inset) var(--cashback-ticket-right-inset) var(--cashback-ticket-bottom-inset) var(--cashback-ticket-left-inset);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    align-self: center;
-    z-index: 5;
     text-align: left;
-    width: 100%;
-    padding: 0 0 0 128px;
-    box-sizing: border-box;
+    z-index: 5;
+}
+
+.cashback-ticket-label,
+.cashback-ticket-value {
+    display: block;
+    font-family: var(--font-body);
+    color: var(--color-black);
+    white-space: nowrap;
 }
 
 .cashback-ticket-label {
-    font-family: var(--font-body);
     font-weight: 800;
-    color: var(--color-black);
-    font-size: 208px;
-    line-height: 1;
+    font-size: var(--cashback-ticket-label-size);
+    line-height: var(--cashback-ticket-label-line-height);
     margin: 0;
 }
 
 .cashback-ticket-value {
-    font-family: var(--font-body);
     font-weight: 700;
-    font-size: 448px;
-    line-height: 421px;
-    color: var(--color-black);
+    font-size: var(--cashback-ticket-value-size);
+    line-height: var(--cashback-ticket-value-line-height);
+    margin-top: var(--cashback-ticket-value-offset);
 }
 
 .cashback-mascot {
     grid-column: 8 / span 5;
     grid-row: 2;
+    width: var(--cashback-mascot-width);
     height: auto;
-    margin-left: -48px;
-    align-self: flex-end;
-    margin-bottom: -196px;
+    justify-self: end;
+    align-self: end;
+    transform: translate(6%, 34%);
     z-index: 10;
     pointer-events: none;
     display: block;
 }
 
 .cashback-lower-text {
-    grid-column: 1 / span 12;
-    font-family: var(--font-body);
-    font-weight: 500;
-    color: var(--color-white);
-    font-size: 30px;
-    transform: rotate(-6deg);
-    text-align: left;
-    z-index: 5;
+    grid-row: 3;
 }
 
 /* --- Media Queries --- */
 
 @media (max-width: 1440px) {
+    .cashback {
+        --cashback-ticket-right-inset: 26%;
+        --cashback-ticket-left-inset: 6.75%;
+        --cashback-mascot-width: clamp(300px, 29vw, 460px);
+        border-radius: 0 0 50px 50px;
+    }
+
+    .cashback-upper-text,
+    .cashback-lower-text {
+        max-width: min(980px, 94%);
+    }
+
     .cashback-mascot {
-        margin-bottom: -136px;
+        transform: translate(4%, 28%);
     }
 }
 
 @media (max-width: 1194px) {
     .cashback {
+        --cashback-ticket-rotate: -5deg;
+        --cashback-copy-rotate: -5deg;
+        --cashback-ticket-top-inset: 8%;
+        --cashback-ticket-right-inset: 24%;
+        --cashback-ticket-bottom-inset: 10%;
+        --cashback-ticket-left-inset: 6.5%;
         padding-bottom: 80px;
     }
 
     .cashback-grid {
+        grid-template-rows: auto auto auto auto;
         row-gap: 24px;
     }
 
-    .cashback-ticket-label {
-        font-size: 150px;
-    }
-
-    .cashback-ticket-value {
-        font-size: 300px;
-        line-height: 0.95;
-    }
-
-    .cashback-ticket-content {
-        padding-left: 80px;
+    .cashback-upper-text,
+    .cashback-lower-text {
+        max-width: 100%;
     }
 
     .cashback-mascot {
-        grid-column: 8 / span 5;
-        width: min(320px, 34vw);
-        margin-left: -24px;
-        margin-bottom: -88px;
+        grid-column: 1 / span 12;
+        grid-row: 3;
+        width: clamp(240px, 34vw, 360px);
+        justify-self: center;
+        align-self: start;
+        transform: none;
+    }
+
+    .cashback-lower-text {
+        grid-row: 4;
     }
 }
 
 @media (max-width: 834px) {
     .cashback {
+        --cashback-ticket-rotate: -4deg;
+        --cashback-copy-rotate: -4deg;
+        --cashback-ticket-top-inset: 8.5%;
+        --cashback-ticket-right-inset: 22%;
+        --cashback-ticket-bottom-inset: 10.5%;
+        --cashback-ticket-left-inset: 6%;
         padding: 240px 0 80px 0;
         border-radius: 0 0 50px 50px;
     }
@@ -154,34 +195,23 @@
         row-gap: 20px;
     }
 
-    .cashback-upper-text,
-    .cashback-lower-text {
-        font-size: 24px;
-    }
-
-    .cashback-ticket-content {
-        padding-left: 56px;
-    }
-
-    .cashback-ticket-label {
-        font-size: 112px;
-    }
-
-    .cashback-ticket-value {
-        font-size: 220px;
-        line-height: 0.95;
-    }
-
     .cashback-mascot {
-        grid-column: 7 / span 6;
-        width: min(280px, 38vw);
-        margin-left: -12px;
-        margin-bottom: -56px;
+        width: clamp(220px, 38vw, 300px);
+        justify-self: end;
     }
 }
 
 @media (max-width: 480px) {
     .cashback {
+        --cashback-ticket-rotate: -3deg;
+        --cashback-copy-rotate: -3deg;
+        --cashback-ticket-top-inset: 9%;
+        --cashback-ticket-right-inset: 20%;
+        --cashback-ticket-bottom-inset: 11%;
+        --cashback-ticket-left-inset: 5.5%;
+        --cashback-ticket-label-size: clamp(40px, 13vw, 64px);
+        --cashback-ticket-value-size: clamp(84px, 29vw, 144px);
+        --cashback-ticket-value-offset: clamp(-4px, -0.6vw, -10px);
         padding: 208px 0 64px 0;
         border-radius: 0 0 32px 32px;
     }
@@ -192,71 +222,11 @@
 
     .cashback-upper-text,
     .cashback-lower-text {
-        font-size: 18px;
-    }
-
-    .cashback-ticket-content {
-        padding-left: 28px;
-    }
-
-    .cashback-ticket-label {
-        font-size: 64px;
-    }
-
-    .cashback-ticket-value {
-        font-size: 144px;
-        line-height: 0.95;
+        max-width: 100%;
     }
 
     .cashback-mascot {
-        grid-column: 7 / span 6;
-        width: min(220px, 46vw);
-        margin-left: 0;
-        margin-bottom: -20px;
-ize: 144px;
-        line-height: 0.95;
-    }
-
-    .cashback-mascot {
-        grid-column: 7 / span 6;
-        width: min(220px, 46vw);
-        margin-left: 0;
-        margin-bottom: -20px;
-ize: 144px;
-        line-height: 0.95;
-    }
-
-    .cashback-mascot {
-        grid-column: 7 / span 6;
-        width: min(220px, 46vw);
-        margin-left: 0;
-        margin-bottom: -20px;
-ize: 144px;
-        line-height: 0.95;
-    }
-
-    .cashback-mascot {
-        grid-column: 7 / span 6;
-        width: min(220px, 46vw);
-        margin-left: 0;
-        margin-bottom: -20px;
-ize: 144px;
-        line-height: 0.95;
-    }
-
-    .cashback-mascot {
-        grid-column: 7 / span 6;
-        width: min(220px, 46vw);
-        margin-left: 0;
-        margin-bottom: -20px;
-size: 144px;
-        line-height: 0.95;
-    }
-
-    .cashback-mascot {
-        grid-column: 7 / span 6;
-        width: min(220px, 46vw);
-        margin-left: 0;
-        margin-bottom: -20px;
+        width: clamp(180px, 54vw, 240px);
+        justify-self: center;
     }
 }
