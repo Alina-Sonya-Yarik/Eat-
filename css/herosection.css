@@ -243,6 +243,10 @@
 }
 
 @media (max-width: 834px) {
+    .hero-section {
+        padding-bottom: 80px;
+    }
+
     .hero-marquee-container {
         top: 176px;
     }

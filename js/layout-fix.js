@@ -37,7 +37,7 @@ function getTargetClearance(viewportWidth) {
 
 function shouldUseDynamicPadding(section, viewportWidth) {
     if (section.classList.contains('hero-section')) {
-        return false;
+        return true;
     }
 
     if (section.classList.contains('what-eat')) {
@@ -56,6 +56,10 @@ function shouldUseDynamicPadding(section, viewportWidth) {
 }
 
 function getChildrenToMeasure(section) {
+    if (section.classList.contains('hero-section')) {
+        return section.querySelectorAll('.hero-center .hero-mockup, .hero-right .hero-heart-lunch');
+    }
+
     if (section.classList.contains('cashback')) {
         return section.querySelectorAll('.cashback-mascot');
     }
@@ -138,10 +142,11 @@ function adjustSectionPaddings() {
             return;
         }
 
-        const overflowBottom = Math.max(0, maxBottomReach - sectionRect.height);
-        const nextPaddingBottom = Math.round(basePaddingBottom + overflowBottom + targetClearance);
+        const naturalGapBottom = sectionRect.height - maxBottomReach;
+        const requiredExtraPaddingBottom = Math.max(0, targetClearance - naturalGapBottom);
+        const nextPaddingBottom = Math.round(basePaddingBottom + requiredExtraPaddingBottom);
 
-        if (overflowBottom <= SECTION_GAP_EPSILON) {
+        if (requiredExtraPaddingBottom <= SECTION_GAP_EPSILON) {
             if (Math.abs(cssPaddingBottom - basePaddingBottom) <= SECTION_GAP_EPSILON) {
                 section.style.paddingBottom = '';
                 return;
