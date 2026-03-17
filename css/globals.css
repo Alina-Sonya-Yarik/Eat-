@@ -47,8 +47,7 @@ section {
 }
 
 .container {
-    max-width: 1920px;
-    padding: 0 80px;
+    max-width: calc(100% - 160px);
     margin: 0 auto;
     width: 100%;
 }
@@ -98,23 +97,25 @@ span {
 
 @media (max-width: 1440px) {
     .container {
-        padding: 0 60px;
+        max-width: calc(100% - 160px);
     }
 }
 
 @media (max-width: 1194px) {
-    /* No specific changes in globals.css for 1194px yet */
+    .container {
+         max-width: calc(100% - 128px);
+    }
 }
 
 @media (max-width: 834px) {
     .container {
-        padding: 0 32px;
+        max-width: calc(100% - 64px);
     }
 }
 
 @media (max-width: 480px) {
     .container {
-        padding: 0 16px;
+    max-width: calc(100% - 64px);
     }
 
     .grid-12 {

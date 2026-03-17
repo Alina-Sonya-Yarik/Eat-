@@ -3,7 +3,8 @@
     --cashback-copy-rotate: -6deg;
     --cashback-copy-size: clamp(18px, 1.7vw + 8px, 30px);
     --cashback-copy-line-height: 1.12;
-    --cashback-ticket-shift-up: clamp(-84px, -5.2vw, -40px);
+    --cashback-upper-gap-adjust: clamp(-22px, -1.4vw, -8px);
+    --cashback-ticket-shift-up: clamp(-24px, -1.6vw, -8px);
     --cashback-ticket-space-after: clamp(44px, 5vw, 96px);
     --cashback-ticket-top-inset: 7.5%;
     --cashback-ticket-right-inset: 27.5%;
@@ -14,7 +15,6 @@
     --cashback-ticket-value-size: clamp(84px, 25.5vw, 448px);
     --cashback-ticket-value-line-height: 0.84;
     --cashback-ticket-value-offset: clamp(-8px, -0.9vw, -20px);
-    --cashback-mascot-width: clamp(320px, 30vw, 560px);
     background-color: var(--color-bg-red);
     color: var(--color-white);
     padding: 272px 0 128px 0;
@@ -52,6 +52,7 @@
 
 .cashback-upper-text {
     grid-row: 1;
+    margin-bottom: var(--cashback-upper-gap-adjust);
 }
 
 .cashback-ticket-container {
@@ -112,13 +113,13 @@
 }
 
 .cashback-mascot {
-    grid-column: 7 / span 6;
-    grid-row: 4;
-    width: var(--cashback-mascot-width);
+    grid-column: 8 / span 5;
+    grid-row: 2;
+    width: clamp(360px, 45vw, 800px);
     height: auto;
     justify-self: end;
-    align-self: start;
-    transform: translate(0, 0);
+    align-self: end;
+    transform: translateY(12%);
     z-index: 10;
     pointer-events: none;
     display: block;
@@ -132,12 +133,21 @@
 
 @media (max-width: 1440px) {
     .cashback {
+        --cashback-upper-gap-adjust: clamp(-18px, -1.1vw, -6px);
         --cashback-ticket-right-inset: 26%;
         --cashback-ticket-left-inset: 6.75%;
         --cashback-mascot-width: clamp(300px, 29vw, 460px);
         border-radius: 0 0 50px 50px;
     }
 
+    .cashback-mascot {
+        grid-column: 8 / span 5;
+        grid-row: 2;
+        width: clamp(240px, 38vw, 460px);
+        justify-self: end;
+        align-self: end;
+        transform: translateY(12%);
+    }
     .cashback-upper-text,
     .cashback-lower-text {
         max-width: min(980px, 94%);
@@ -148,7 +158,8 @@
     .cashback {
         --cashback-ticket-rotate: -5deg;
         --cashback-copy-rotate: -5deg;
-        --cashback-ticket-shift-up: clamp(-66px, -4.2vw, -30px);
+        --cashback-upper-gap-adjust: clamp(-14px, -1vw, -4px);
+        --cashback-ticket-shift-up: clamp(-18px, -1.2vw, -6px);
         --cashback-ticket-space-after: clamp(36px, 4.5vw, 76px);
         --cashback-ticket-top-inset: 8%;
         --cashback-ticket-right-inset: 24%;
@@ -158,7 +169,6 @@
     }
 
     .cashback-grid {
-        grid-template-rows: auto auto auto auto;
         row-gap: 24px;
     }
 
@@ -168,16 +178,12 @@
     }
 
     .cashback-mascot {
-        grid-column: 1 / span 12;
-        grid-row: 4;
-        width: clamp(240px, 34vw, 360px);
-        justify-self: center;
-        align-self: start;
-        transform: none;
-    }
-
-    .cashback-lower-text {
-        grid-row: 3;
+        grid-column: 8 / span 5;
+        grid-row: 2;
+        width: clamp(220px, 38vw, 350px);
+        justify-self: end;
+        align-self: end;
+        transform: translateY(12%);
     }
 }
 
@@ -185,8 +191,9 @@
     .cashback {
         --cashback-ticket-rotate: -4deg;
         --cashback-copy-rotate: -4deg;
-        --cashback-ticket-shift-up: clamp(-44px, -3vw, -18px);
-        --cashback-ticket-space-after: clamp(28px, 3.5vw, 52px);
+        --cashback-upper-gap-adjust: clamp(-16px, -2vw, -4px);
+        --cashback-ticket-shift-up: clamp(-8px, -0.8vw, -4px);
+        --cashback-ticket-space-after: clamp(16px, 2vw, 32px);
         --cashback-ticket-top-inset: 8.5%;
         --cashback-ticket-right-inset: 22%;
         --cashback-ticket-bottom-inset: 10.5%;
@@ -200,8 +207,12 @@
     }
 
     .cashback-mascot {
-        width: clamp(220px, 38vw, 300px);
-        justify-self: center;
+        grid-column: 7 / span 6;
+        grid-row: 2;
+        width: clamp(110px, 30vw, 270px);
+        justify-self: end;
+        align-self: end;
+        transform: translateY(15%);
     }
 }
 
@@ -209,7 +220,8 @@
     .cashback {
         --cashback-ticket-rotate: -3deg;
         --cashback-copy-rotate: -3deg;
-        --cashback-ticket-shift-up: clamp(-24px, -1.8vw, -10px);
+        --cashback-upper-gap-adjust: clamp(-6px, -0.5vw, 0px);
+        --cashback-ticket-shift-up: clamp(-8px, -0.6vw, -2px);
         --cashback-ticket-space-after: clamp(20px, 3vw, 36px);
         --cashback-ticket-top-inset: 9%;
         --cashback-ticket-right-inset: 20%;
@@ -223,6 +235,7 @@
     }
 
     .cashback-grid {
+        grid-template-rows: auto auto auto auto;
         row-gap: 16px;
     }
 
@@ -232,7 +245,11 @@
     }
 
     .cashback-mascot {
+        grid-column: 1 / span 12;
+        grid-row: 4;
         width: clamp(180px, 54vw, 240px);
         justify-self: center;
+        align-self: start;
+        transform: none;
     }
 }
