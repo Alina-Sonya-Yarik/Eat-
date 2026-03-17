@@ -1,33 +1,114 @@
 /**
- * Layout Fix: adds bottom padding only when section images visually eat into
- * the required bottom clearance for the current breakpoint.
+ * Layout Fix: keeps section bottom padding stable by always calculating
+ * the final inline padding-bottom from the current layout state.
  */
 const SECTION_SELECTOR = 'section';
-const IMAGE_SELECTOR = 'img';
+const MEASURABLE_SELECTOR = '*';
 const RESIZE_DEBOUNCE_MS = 120;
 const EPSILON = 1;
+const BASE_PADDING_CACHE = new Map();
+const IGNORED_MEASUREMENT_SELECTORS = [
+    '.container',
+    '.grid-12',
+    '.hero-grid',
+    '.hero-content',
+    '.what-eat-grid',
+    '.what-eat-content',
+    '.what-eat-text-group',
+    '.cashback-grid',
+    '.how-it-works-grid',
+    '.popular-restaurants-grid',
+    '.download-grid',
+    '.download-content',
+    '.cashback-ticket-bg',
+];
 
 let layoutFixFrame = null;
 let layoutFixResizeTimer;
+
+function getViewportBucket(viewportWidth) {
+    if (viewportWidth <= 480) {
+        return 'mobile';
+    }
+
+    if (viewportWidth <= 1194) {
+        return 'tablet';
+    }
+
+    return 'desktop';
+}
 
 function getTargetBottomClearance(viewportWidth) {
     if (viewportWidth <= 480) {
         return 64;
     }
 
-    if (viewportWidth <= 834) {
+    if (viewportWidth <= 1194) {
         return 80;
     }
 
     return 128;
 }
 
-function isVisibleImage(image) {
-    if (!image || image.offsetWidth === 0 || image.offsetHeight === 0) {
+function getBasePaddingCacheKey(section, viewportWidth) {
+    return `${getViewportBucket(viewportWidth)}::${section.tagName}::${section.className}`;
+}
+
+function getSectionClassList(section) {
+    return Array.from(section.classList).join(' ');
+}
+
+function measureBasePaddingBottom(section, viewportWidth) {
+    const cacheKey = getBasePaddingCacheKey(section, viewportWidth);
+
+    if (BASE_PADDING_CACHE.has(cacheKey)) {
+        return BASE_PADDING_CACHE.get(cacheKey);
+    }
+
+    const probe = document.createElement(section.tagName);
+    const className = getSectionClassList(section);
+
+    if (className) {
+        probe.className = className;
+    }
+
+    probe.setAttribute('aria-hidden', 'true');
+    probe.style.position = 'fixed';
+    probe.style.left = '-99999px';
+    probe.style.top = '0';
+    probe.style.visibility = 'hidden';
+    probe.style.pointerEvents = 'none';
+    probe.style.inlineSize = '100vw';
+    probe.style.blockSize = '0';
+    probe.style.margin = '0';
+    probe.style.border = '0';
+    probe.style.minHeight = '0';
+    probe.style.maxHeight = '0';
+    probe.style.overflow = 'hidden';
+
+    document.body.appendChild(probe);
+    const basePaddingBottom = parseFloat(window.getComputedStyle(probe).paddingBottom) || 0;
+    document.body.removeChild(probe);
+
+    BASE_PADDING_CACHE.set(cacheKey, basePaddingBottom);
+
+    return basePaddingBottom;
+}
+
+function isIgnoredMeasurementTarget(element) {
+    if (!(element instanceof HTMLElement)) {
+        return true;
+    }
+
+    return IGNORED_MEASUREMENT_SELECTORS.some(selector => element.matches(selector));
+}
+
+function isVisibleMeasurementTarget(element) {
+    if (!element || isIgnoredMeasurementTarget(element) || element.offsetWidth === 0 || element.offsetHeight === 0) {
         return false;
     }
 
-    const computedStyle = window.getComputedStyle(image);
+    const computedStyle = window.getComputedStyle(element);
 
     if (computedStyle.display === 'none' || computedStyle.visibility === 'hidden') {
         return false;
@@ -36,17 +117,17 @@ function isVisibleImage(image) {
     return true;
 }
 
-function getSectionImages(section) {
-    return Array.from(section.querySelectorAll(IMAGE_SELECTOR)).filter(isVisibleImage);
+function getSectionMeasurementTargets(section) {
+    return Array.from(section.querySelectorAll(MEASURABLE_SELECTOR)).filter(isVisibleMeasurementTarget);
 }
 
-function getMaxImageBottom(section, images) {
+function getMaxMeasuredBottom(section, targets) {
     const sectionRect = section.getBoundingClientRect();
     let maxBottom = -Infinity;
 
-    images.forEach(image => {
-        const imageRect = image.getBoundingClientRect();
-        const relativeBottom = imageRect.bottom - sectionRect.top;
+    targets.forEach(target => {
+        const targetRect = target.getBoundingClientRect();
+        const relativeBottom = targetRect.bottom - sectionRect.top;
 
         if (relativeBottom > maxBottom) {
             maxBottom = relativeBottom;
@@ -56,35 +137,42 @@ function getMaxImageBottom(section, images) {
     return { sectionRect, maxBottom };
 }
 
-function adjustSectionPadding(section, viewportWidth) {
-    const images = getSectionImages(section);
+function getInlinePaddingBottom(section) {
+    const inlinePaddingBottom = parseFloat(section.style.paddingBottom);
 
-    if (images.length === 0) {
-        section.style.paddingBottom = '';
+    if (Number.isNaN(inlinePaddingBottom)) {
+        return null;
+    }
+
+    return inlinePaddingBottom;
+}
+
+function adjustSectionPadding(section, viewportWidth) {
+    const targets = getSectionMeasurementTargets(section);
+
+    if (targets.length === 0) {
         return;
     }
 
-    section.style.paddingBottom = '';
-
-    const computedStyle = window.getComputedStyle(section);
-    const cssPaddingBottom = parseFloat(computedStyle.paddingBottom) || 0;
+    const basePaddingBottom = measureBasePaddingBottom(section, viewportWidth);
     const targetClearance = getTargetBottomClearance(viewportWidth);
-    const { sectionRect, maxBottom } = getMaxImageBottom(section, images);
+    const { sectionRect, maxBottom } = getMaxMeasuredBottom(section, targets);
+    const currentComputedPaddingBottom = parseFloat(window.getComputedStyle(section).paddingBottom) || 0;
 
     if (maxBottom === -Infinity) {
-        section.style.paddingBottom = '';
         return;
     }
 
-    const currentBottomGap = sectionRect.height - maxBottom;
-    const requiredCorrection = Math.max(0, targetClearance - currentBottomGap);
+    const visualContentBottom = sectionRect.height - currentComputedPaddingBottom;
+    const imageOverflow = Math.max(0, maxBottom - visualContentBottom);
+    const nextPaddingBottom = Math.round(Math.max(basePaddingBottom, targetClearance) + imageOverflow);
+    const currentInlinePaddingBottom = getInlinePaddingBottom(section);
 
-    if (requiredCorrection <= EPSILON) {
-        section.style.paddingBottom = '';
+    if (currentInlinePaddingBottom !== null && Math.abs(currentInlinePaddingBottom - nextPaddingBottom) <= EPSILON) {
         return;
     }
 
-    section.style.paddingBottom = `${Math.round(cssPaddingBottom + requiredCorrection)}px`;
+    section.style.paddingBottom = `${nextPaddingBottom}px`;
 }
 
 function adjustSectionPaddings() {
@@ -109,20 +197,29 @@ function scheduleAdjustSectionPaddings() {
 
 function onResize() {
     clearTimeout(layoutFixResizeTimer);
-    layoutFixResizeTimer = setTimeout(scheduleAdjustSectionPaddings, RESIZE_DEBOUNCE_MS);
+    layoutFixResizeTimer = setTimeout(() => {
+        BASE_PADDING_CACHE.clear();
+        scheduleAdjustSectionPaddings();
+    }, RESIZE_DEBOUNCE_MS);
 }
 
 document.addEventListener('DOMContentLoaded', scheduleAdjustSectionPaddings);
 window.addEventListener('load', scheduleAdjustSectionPaddings);
 window.addEventListener('resize', onResize);
-window.addEventListener('orientationchange', () => setTimeout(scheduleAdjustSectionPaddings, 150));
+window.addEventListener('orientationchange', () => {
+    BASE_PADDING_CACHE.clear();
+    setTimeout(scheduleAdjustSectionPaddings, 150);
+});
 
 if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(scheduleAdjustSectionPaddings);
+    document.fonts.ready.then(() => {
+        BASE_PADDING_CACHE.clear();
+        scheduleAdjustSectionPaddings();
+    });
 }
 
 window.addEventListener('load', () => {
-    document.querySelectorAll(IMAGE_SELECTOR).forEach(image => {
+    document.querySelectorAll('img').forEach(image => {
         if (image.complete) {
             return;
         }
