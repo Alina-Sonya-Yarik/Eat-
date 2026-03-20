@@ -36,7 +36,7 @@
 
 .cashback-upper-text {
     grid-row: 1;
-    margin-bottom: clamp(-22px, -1.4vw, -8px);
+    margin-bottom: clamp(-32px, -1vw, -8px);
 }
 
 .cashback-ticket-container {
@@ -44,12 +44,12 @@
     grid-row: 2;
     position: relative;
     width: 100%;
-    max-width: 1760px;
     aspect-ratio: 1762 / 691;
+    container-type: inline-size;
     margin: 0 auto;
-    margin-top: clamp(-24px, -1.6vw, -8px);
-    margin-bottom: clamp(44px, 5vw, 96px);
-    justify-self: center;
+    margin-top: clamp(-60px, -4.6vw, -10px);
+    margin-bottom: clamp(47px, 4.5vw, 142px);
+    justify-self: stretch;
     transform: rotate(-6deg);
     transform-origin: center center;
     z-index: 2;
@@ -84,16 +84,16 @@
 
 .cashback-ticket-label {
     font-weight: 800;
-    font-size: clamp(40px, 11.5vw, 208px);
+    font-size: clamp(48px, 14cqi, 400px);
     line-height: 0.9;
     margin: 0;
 }
 
 .cashback-ticket-value {
     font-weight: 700;
-    font-size: clamp(84px, 25.5vw, 448px);
+    font-size: clamp(66px, 30cqi, 573px);
     line-height: 0.84;
-    margin-top: clamp(-8px, -0.9vw, -20px);
+    margin-top: clamp(-24px, -1.15cqi, -4px);
 }
 
 .cashback-mascot {
@@ -121,9 +121,13 @@
     }
 
     .cashback-upper-text {
-        margin-bottom: clamp(-18px, -1.1vw, -6px);
+        margin-bottom: clamp(-0px, -1.1vw, -6px);
     }
 
+
+    .cashback-lower-text {
+        /* margin-top: clamp(64px, 1vw, 8px); */
+    }
     .cashback-ticket-content {
         inset: 7.5% 26% 9% 6.75%;
     }
@@ -249,23 +253,24 @@
     }
 
     .cashback-ticket-content {
-        inset: 9% 20% 11% 5.5%;
+        inset: 10% 23% 12% 7%;
     }
 
     .cashback-ticket-label {
-        font-size: clamp(40px, 13vw, 64px);
+        font-size: clamp(40px, 13cqi, 400px);
+        line-height: 0.92;
     }
 
     .cashback-ticket-value {
-        font-size: clamp(84px, 29vw, 144px);
-        margin-top: clamp(-4px, -0.6vw, -10px);
+        line-height: 0.88;
+        font-size: clamp(66px, 28cqi, 573px);
     }
 
     .cashback-mascot {
         grid-column: 1 / span 12;
         grid-row: 4;
-        width: clamp(180px, 54vw, 240px);
-        justify-self: center;
+        width: clamp(190px, 92vw, 380px);
+        justify-self: end;
         align-self: start;
         transform: none;
     }
