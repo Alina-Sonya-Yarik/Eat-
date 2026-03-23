@@ -25,14 +25,16 @@
     border-radius: 42px;
     border: 4px solid var(--color-black);
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
+    gap: 16px;
     padding: 16px 32px;
 }
 
 .header-logo {
     width: 64px;
     height: auto;
+    margin-right: auto;
 }
 
 .header-social-media {
@@ -41,14 +43,35 @@
     justify-content: space-between;
 }
 
+.header-social-media a {
+    border-radius: 50%;
+    transition: transform var(--duration-fast) var(--ease-spring-snappy);
+}
+
 .header-social-media img {
     width: 48px;
     height: 48px;
-    transition: opacity 0.3s ease;
+    transition:
+        opacity var(--duration-fast) ease,
+        transform var(--duration-fast) var(--ease-spring-soft);
 }
 
 .header-social-media a:hover img {
-    opacity: 0.8;
+    opacity: 0.92;
+    transform: translateY(-2px) scale(1.05) rotate(-3deg);
+}
+
+.header-social-media a:nth-child(2):hover img {
+    transform: translateY(-2px) scale(1.05) rotate(3deg);
+}
+
+.header-social-media a:active img {
+    transform: translateY(0) scale(0.94);
+}
+
+.header-social-media a:focus-visible {
+    outline: none;
+    box-shadow: var(--button-focus-ring);
 }
 
 .header-download-button {
@@ -61,6 +84,34 @@
     justify-content: center;
     min-width: 256px;
     border: 2px solid var(--color-primary);
+    display: none;
+    transition:
+        transform 150ms cubic-bezier(0.32, 1.4, 0.64, 1),
+        color var(--duration-fast) ease,
+        border-color var(--duration-fast) ease,
+        background-color var(--duration-fast) ease;
+}
+
+.header-download-button:hover {
+    transform: translateY(-2px);
+    background-color: var(--color-primary);
+    border-color: var(--color-white);
+    color: var(--color-white);
+}
+
+.header-download-button:active {
+    transform: translateY(1px);
+    box-shadow:
+        inset 0 6px 0 rgba(109, 8, 40, 0.65),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    background-color: var(--color-primary);
+    border-color: var(--color-white);
+    color: var(--color-white);
+}
+
+.header-download-button:focus-visible {
+    outline: none;
+    box-shadow: var(--button-focus-ring);
 }
 
 .header-download-text {

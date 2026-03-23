@@ -213,7 +213,7 @@
             <div class="container">
                 <div class="footer-grid">
                     <div class="footer-row">
-                        <a href="mailto:support@eat.ru" class="footer-email-button"
+                        <a href="mailto:support@eat.ru" class="footer-email-button" target="_blank" rel="noopener noreferrer"
                             aria-label="Написать на support@eat.ru">
                             <span class="footer-email-text">support@eat.ru</span>
                         </a>
@@ -257,7 +257,7 @@
                     <div class="feedback-widget__details-grid">
                         <label class="feedback-widget__field feedback-widget__message-field" for="feedback-message">
                             <span class="feedback-widget__label-text">Какой у вас вопрос или предложение?</span>
-                            <textarea id="feedback-message" name="message" required maxlength="500" rows="6"
+                            <textarea id="feedback-message" name="message" required minlength="6" maxlength="500" rows="6"
                                 placeholder="Опишите ваш вопрос или идею в свободной форме."></textarea>
                         </label>
                         <div class="feedback-widget__side">
@@ -285,10 +285,14 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-config.js"></script>
+    <script src="../js/supabase-client.js"></script>
     <script src="../js/typography.js"></script>
     <script src="../js/layout-fix.js"></script>
     <script src="../js/sticky-fix.js"></script>
     <script src="../js/what-eat-align.js"></script>
+    <script src="../js/popular-restaurants.js"></script>
     <script src="../js/popular-slider.js"></script>
     <script src="../js/feedback-widget.js"></script>
 </body>

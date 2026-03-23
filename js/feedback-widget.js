@@ -16,6 +16,7 @@
     const EMPTY_PHONE_MASK = '+7 (___) ___ __-__';
     const CLOSE_CLASS_DELAY_MS = 360;
     let closeClassTimer = null;
+    let lockedScrollY = 0;
 
     if (!morph || !openButton || !closeButton || !overlay || !form || !statusNode) {
         return;
@@ -26,8 +27,53 @@
         statusNode.classList.toggle('is-error', isError);
     }
 
+    function getFriendlyErrorMessage(error) {
+        const message = error && typeof error.message === 'string' ? error.message : '';
+
+        if (message.includes('feedback_requests_message_length_check')) {
+            return 'Сообщение должно содержать от 6 до 2000 символов.';
+        }
+
+        if (message.includes('feedback_requests_name_length_check')) {
+            return 'Имя должно содержать от 2 до 120 символов.';
+        }
+
+        if (message.includes('feedback_requests_email_length_check')) {
+            return 'Проверьте корректность электронной почты.';
+        }
+
+        if (message.includes('feedback_requests_phone_format_check')) {
+            return 'Телефон должен быть пустым или содержать 10 цифр после +7.';
+        }
+
+        if (message.includes('row-level security policy')) {
+            return 'Проверьте обязательные согласия перед отправкой формы.';
+        }
+
+        return 'Не удалось отправить форму. Попробуйте еще раз.';
+    }
+
+    function getSupabaseClient() {
+        if (!window.appSupabase || typeof window.appSupabase.getClient !== 'function') {
+            return null;
+        }
+
+        return window.appSupabase.getClient();
+    }
+
     function lockPageScroll(shouldLock) {
-        document.body.classList.toggle('feedback-lock-scroll', shouldLock);
+        const body = document.body;
+
+        if (shouldLock) {
+            lockedScrollY = window.scrollY || window.pageYOffset || 0;
+            body.style.setProperty('--feedback-scroll-lock-top', `-${lockedScrollY}px`);
+            body.classList.add('feedback-lock-scroll');
+            return;
+        }
+
+        body.classList.remove('feedback-lock-scroll');
+        body.style.removeProperty('--feedback-scroll-lock-top');
+        window.scrollTo(0, lockedScrollY);
     }
 
     function normalizePhoneDigits(value) {
@@ -260,7 +306,7 @@
         });
     }
 
-    form.addEventListener('submit', event => {
+    form.addEventListener('submit', async event => {
         event.preventDefault();
         setStatus('', false);
         validateOptionalPhone();
@@ -271,13 +317,54 @@
             return;
         }
 
-        form.reset();
+        const submitButton = form.querySelector('.feedback-widget__submit');
+        const supabase = getSupabaseClient();
+        const formData = new FormData(form);
+        const emailValue = String(formData.get('email') || '').trim().toLowerCase();
+        const phoneDigits = normalizePhoneDigits(String(formData.get('phone') || ''));
+        const payload = {
+            name: String(formData.get('name') || '').trim(),
+            email: emailValue,
+            phone: phoneDigits || null,
+            message: String(formData.get('message') || '').trim(),
+            personal_data_consent: Boolean(formData.get('personalDataConsent')),
+            terms_consent: Boolean(formData.get('termsConsent')),
+            source_page: window.location.pathname,
+        };
 
-        if (phoneInput) {
-            phoneInput.value = EMPTY_PHONE_MASK;
+        if (!supabase) {
+            setStatus('Заполните `js/supabase-config.js`, чтобы включить отправку формы в базу.', true);
+            return;
         }
 
-        setStatus('Спасибо, мы получили ваш вопрос.', false);
+        if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.textContent = 'Отправляем...';
+        }
+
+        try {
+            const { error } = await supabase.from('feedback_requests').insert(payload);
+
+            if (error) {
+                throw error;
+            }
+
+            form.reset();
+
+            if (phoneInput) {
+                phoneInput.value = EMPTY_PHONE_MASK;
+            }
+
+            setStatus('Спасибо, мы получили ваш вопрос.', false);
+        } catch (error) {
+            console.error('Failed to submit feedback request:', error);
+            setStatus(getFriendlyErrorMessage(error), true);
+        } finally {
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Отправить';
+            }
+        }
     });
 
     setExpanded(false);

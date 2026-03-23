@@ -1,0 +1,255 @@
+(() => {
+    const section = document.querySelector('.popular-restaurants');
+
+    if (!section) {
+        return;
+    }
+
+    const track = section.querySelector('.popular-slider');
+    const description = section.querySelector('.popular-description');
+    const interactiveMediaQuery = window.matchMedia('(min-width: 1195px) and (hover: hover) and (pointer: fine)');
+
+    if (!track) {
+        return;
+    }
+
+    const fallbackRestaurants = [
+        {
+            name: 'Ресторан 01',
+            cuisine: 'Тестовая кухня',
+            short_description: 'Здесь будет краткое описание ресторана для проверки верстки и композиции карточки.',
+            image_url: 'https://picsum.photos/seed/restaurant-01-a/1200/1200',
+            image_url_2: 'https://picsum.photos/seed/restaurant-01-b/1200/1200',
+            image_url_3: 'https://picsum.photos/seed/restaurant-01-c/1200/1200',
+        },
+        {
+            name: 'Ресторан 02',
+            cuisine: 'Тестовая кухня',
+            short_description: 'Этот текст нужен как временная рыба, чтобы проверить переносы строк и отступы.',
+            image_url: 'https://picsum.photos/seed/restaurant-02-a/1200/1200',
+            image_url_2: 'https://picsum.photos/seed/restaurant-02-b/1200/1200',
+            image_url_3: 'https://picsum.photos/seed/restaurant-02-c/1200/1200',
+        },
+        {
+            name: 'Ресторан 03',
+            cuisine: 'Тестовая кухня',
+            short_description: 'В будущем здесь появится короткий анонс ресторана, его формата и особенностей.',
+            image_url: 'https://picsum.photos/seed/restaurant-03-a/1200/1200',
+            image_url_2: 'https://picsum.photos/seed/restaurant-03-b/1200/1200',
+            image_url_3: 'https://picsum.photos/seed/restaurant-03-c/1200/1200',
+        },
+        {
+            name: 'Ресторан 04',
+            cuisine: 'Тестовая кухня',
+            short_description: 'Карточка пока заполнена рыбой, чтобы удобно настраивать размер текста и визуальный ритм.',
+            image_url: 'https://picsum.photos/seed/restaurant-04-a/1200/1200',
+            image_url_2: 'https://picsum.photos/seed/restaurant-04-b/1200/1200',
+            image_url_3: 'https://picsum.photos/seed/restaurant-04-c/1200/1200',
+        },
+        {
+            name: 'Ресторан 05',
+            cuisine: 'Тестовая кухня',
+            short_description: 'Здесь позже будет реальное описание заведения, его кухни и основных преимуществ.',
+            image_url: 'https://picsum.photos/seed/restaurant-05-a/1200/1200',
+            image_url_2: 'https://picsum.photos/seed/restaurant-05-b/1200/1200',
+            image_url_3: 'https://picsum.photos/seed/restaurant-05-c/1200/1200',
+        },
+        {
+            name: 'Ресторан 06',
+            cuisine: 'Тестовая кухня',
+            short_description: 'Текст-рыба помогает проверить, как карточка ведет себя на разных экранах и брейкпоинтах.',
+            image_url: 'https://picsum.photos/seed/restaurant-06-a/1200/1200',
+            image_url_2: 'https://picsum.photos/seed/restaurant-06-b/1200/1200',
+            image_url_3: 'https://picsum.photos/seed/restaurant-06-c/1200/1200',
+        },
+        {
+            name: 'Ресторан 07',
+            cuisine: 'Тестовая кухня',
+            short_description: 'Сюда можно будет вывести настоящее описание ресторана после наполнения базы данных.',
+            image_url: 'https://picsum.photos/seed/restaurant-07-a/1200/1200',
+            image_url_2: 'https://picsum.photos/seed/restaurant-07-b/1200/1200',
+            image_url_3: 'https://picsum.photos/seed/restaurant-07-c/1200/1200',
+        },
+        {
+            name: 'Ресторан 08',
+            cuisine: 'Тестовая кухня',
+            short_description: 'Пока это заполнитель, который нужен только для настройки карточек и текстового блока.',
+            image_url: 'https://picsum.photos/seed/restaurant-08-a/1200/1200',
+            image_url_2: 'https://picsum.photos/seed/restaurant-08-b/1200/1200',
+            image_url_3: 'https://picsum.photos/seed/restaurant-08-c/1200/1200',
+        },
+        {
+            name: 'Ресторан 09',
+            cuisine: 'Тестовая кухня',
+            short_description: 'Временный текст позволяет спокойно проверить ширину описания и общую читаемость.',
+            image_url: 'https://picsum.photos/seed/restaurant-09-a/1200/1200',
+            image_url_2: 'https://picsum.photos/seed/restaurant-09-b/1200/1200',
+            image_url_3: 'https://picsum.photos/seed/restaurant-09-c/1200/1200',
+        },
+        {
+            name: 'Ресторан 10',
+            cuisine: 'Тестовая кухня',
+            short_description: 'После подключения финальных данных эта рыба будет заменена на реальное описание ресторана.',
+            image_url: 'https://picsum.photos/seed/restaurant-10-a/1200/1200',
+            image_url_2: 'https://picsum.photos/seed/restaurant-10-b/1200/1200',
+            image_url_3: 'https://picsum.photos/seed/restaurant-10-c/1200/1200',
+        },
+    ];
+
+    function escapeHtml(value) {
+        return String(value ?? '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function buildMediaMarkup(imageUrl, index) {
+        const safeUrl = String(imageUrl || '').trim();
+        const style = safeUrl
+            ? ` style="background-image: linear-gradient(180deg, rgba(24, 24, 24, 0.04), rgba(24, 24, 24, 0.38)), url('${escapeHtml(safeUrl)}');"`
+            : '';
+
+        return `<div class="popular-card__media popular-card__media--${index}"${style}></div>`;
+    }
+
+    function createCardMarkup(restaurant) {
+        const imageSet = [
+            restaurant.image_url,
+            restaurant.image_url_2 || restaurant.image_url,
+            restaurant.image_url_3 || restaurant.image_url_2 || restaurant.image_url,
+        ];
+        const label = restaurant.cuisine ? `<p class="popular-card__eyebrow">${escapeHtml(restaurant.cuisine)}</p>` : '';
+        const summary = restaurant.short_description
+            ? `<p class="popular-card__summary">${escapeHtml(restaurant.short_description)}</p>`
+            : '';
+        const mediaMarkup = imageSet
+            .map((imageUrl, index) => buildMediaMarkup(imageUrl, index + 1))
+            .join('');
+
+        return `
+            <article class="popular-restaurant-card is-zone-1" aria-label="${escapeHtml(restaurant.name)}">
+                ${mediaMarkup}
+                <div class="popular-card__overlay">
+                    ${label}
+                    <h3 class="popular-card__title">${escapeHtml(restaurant.name)}</h3>
+                    ${summary}
+                </div>
+            </article>
+        `;
+    }
+
+    function renderRestaurants(restaurants) {
+        const items = Array.isArray(restaurants) && restaurants.length ? restaurants : fallbackRestaurants;
+        track.innerHTML = items.map(createCardMarkup).join('');
+
+        if (description && (!Array.isArray(restaurants) || !restaurants.length)) {
+            description.textContent = 'Пока используем демонстрационные карточки. После заполнения таблицы restaurants данные подтянутся автоматически.';
+        }
+    }
+
+    function resetCardMotion(card) {
+        if (!card) {
+            return;
+        }
+
+        card.style.setProperty('--card-shift-x', '0px');
+        card.style.setProperty('--card-shift-y', '0px');
+        card.classList.remove('is-zone-2', 'is-zone-3');
+        card.classList.add('is-zone-1');
+    }
+
+    function updateCardMotion(card, event) {
+        if (!card || !interactiveMediaQuery.matches) {
+            resetCardMotion(card);
+            return;
+        }
+
+        const rect = card.getBoundingClientRect();
+
+        if (!rect.width || !rect.height) {
+            resetCardMotion(card);
+            return;
+        }
+
+        const relativeX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        const relativeY = ((event.clientY - rect.top) / rect.height) * 2 - 1;
+        const shiftX = relativeX * 6;
+        const shiftY = relativeY * 6;
+        const zone = Math.min(3, Math.max(1, Math.floor(((event.clientX - rect.left) / rect.width) * 3) + 1));
+
+        card.style.setProperty('--card-shift-x', `${shiftX.toFixed(2)}px`);
+        card.style.setProperty('--card-shift-y', `${shiftY.toFixed(2)}px`);
+        card.classList.remove('is-zone-1', 'is-zone-2', 'is-zone-3');
+        card.classList.add(`is-zone-${zone}`);
+    }
+
+    function bindCardInteractions() {
+        track.addEventListener('pointermove', event => {
+            const card = event.target instanceof Element
+                ? event.target.closest('.popular-restaurant-card')
+                : null;
+
+            if (!card) {
+                return;
+            }
+
+            updateCardMotion(card, event);
+        });
+
+        track.addEventListener('pointerleave', () => {
+            track.querySelectorAll('.popular-restaurant-card').forEach(resetCardMotion);
+        });
+
+        track.addEventListener('pointerout', event => {
+            const card = event.target instanceof Element
+                ? event.target.closest('.popular-restaurant-card')
+                : null;
+            const relatedCard = event.relatedTarget instanceof Element
+                ? event.relatedTarget.closest('.popular-restaurant-card')
+                : null;
+
+            if (card && card !== relatedCard) {
+                resetCardMotion(card);
+            }
+        });
+
+        interactiveMediaQuery.addEventListener('change', () => {
+            track.querySelectorAll('.popular-restaurant-card').forEach(resetCardMotion);
+        });
+    }
+
+    async function loadRestaurants() {
+        const supabaseApi = window.appSupabase;
+        const client = supabaseApi && typeof supabaseApi.getClient === 'function'
+            ? supabaseApi.getClient()
+            : null;
+
+        if (!client) {
+            renderRestaurants(null);
+            return;
+        }
+
+        try {
+            const { data, error } = await client
+                .from('restaurants')
+                .select('name, cuisine, short_description, image_url, image_url_2, image_url_3, sort_order')
+                .eq('is_published', true)
+                .order('sort_order', { ascending: true })
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                throw error;
+            }
+
+            renderRestaurants(data);
+        } catch (error) {
+            console.error('Failed to load restaurants from Supabase:', error);
+            renderRestaurants(null);
+        }
+    }
+
+    bindCardInteractions();
+    loadRestaurants();
+})();
