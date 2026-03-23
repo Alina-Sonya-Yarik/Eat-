@@ -1,5 +1,5 @@
 .grid-12{
-    height: 47vw;
+    /* height: 47vw; */
 }
 
 .what-eat {
@@ -59,6 +59,7 @@
     font-size: 32px;
     line-height: 1.2;
     width: 18em;
+    margin-bottom: -4em;
 }
 
 .what-eat-images {
@@ -146,6 +147,7 @@
     .what-eat-tagline {
         font-size: 28px;
         max-width: 75vw;
+        margin-bottom: 0;
     }
 
     .what-eat-images {
@@ -206,6 +208,7 @@
     .what-eat-tagline {
         font-size: 24px;
         width: 17em;
+        
     }
 
     .what-eat-images {

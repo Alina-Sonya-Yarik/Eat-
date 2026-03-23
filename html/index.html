@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="../css/popular.css" />
     <link rel="stylesheet" href="../css/download.css" />
     <link rel="stylesheet" href="../css/footer.css" />
+    <link rel="stylesheet" href="../css/feedback-widget.css" />
 </head>
 
 <body>
@@ -229,11 +230,67 @@
             </div>
         </footer>
     </div>
+    <div class="feedback-widget" data-feedback-widget>
+        <div class="feedback-widget__overlay" data-feedback-overlay></div>
+        <div class="feedback-widget__morph" role="dialog" aria-modal="true" aria-hidden="true"
+            aria-labelledby="feedback-widget-title">
+            <button class="feedback-widget__trigger" type="button" data-feedback-open
+                aria-label="Открыть форму обратной связи">?</button>
+            <div class="feedback-widget__content">
+                <button class="feedback-widget__close" type="button" data-feedback-close
+                    aria-label="Закрыть форму обратной связи">&times;</button>
+                <h3 class="feedback-widget__title" id="feedback-widget-title">Есть вопрос или предложение?</h3>
+                <p class="feedback-widget__subtitle">Заполните форму, и мы свяжемся с вами.</p>
+                <form class="feedback-widget__form" data-feedback-form novalidate>
+                    <div class="feedback-widget__fields-grid">
+                        <label class="feedback-widget__field" for="feedback-name">
+                            <span class="feedback-widget__label-text">Как вас зовут?</span>
+                            <input id="feedback-name" name="name" type="text" required autocomplete="name"
+                                placeholder="Например, Анна" />
+                        </label>
+                        <label class="feedback-widget__field" for="feedback-email">
+                            <span class="feedback-widget__label-text">Электронная почта</span>
+                            <input id="feedback-email" name="email" type="email" required autocomplete="email"
+                                placeholder="example@mail.ru" />
+                        </label>
+                    </div>
+                    <div class="feedback-widget__details-grid">
+                        <label class="feedback-widget__field feedback-widget__message-field" for="feedback-message">
+                            <span class="feedback-widget__label-text">Какой у вас вопрос или предложение?</span>
+                            <textarea id="feedback-message" name="message" required maxlength="500" rows="6"
+                                placeholder="Опишите ваш вопрос или идею в свободной форме."></textarea>
+                        </label>
+                        <div class="feedback-widget__side">
+                            <label class="feedback-widget__field" for="feedback-phone">
+                                <span class="feedback-widget__label-text">Номер телефона (необязательно)</span>
+                                <span class="feedback-widget__hint">Если вы хотите, чтобы мы Вам позвонили.</span>
+                                <input id="feedback-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel"
+                                    data-feedback-phone value="+7 (___) ___ __-__" placeholder="+7 (000) 000 00-00" />
+                            </label>
+                            <div class="feedback-widget__agreements">
+                                <label class="feedback-widget__checkbox">
+                                    <input type="checkbox" name="personalDataConsent" required />
+                                    <span>Я соглашаюсь на <a href="#">обработку персональных данных</a>.</span>
+                                </label>
+                                <label class="feedback-widget__checkbox">
+                                    <input type="checkbox" name="termsConsent" required />
+                                    <span>Я принимаю <a href="#">пользовательское соглашение</a>.</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="feedback-widget__status" data-feedback-status role="status" aria-live="polite"></p>
+                    <button class="feedback-widget__submit" type="submit">Отправить</button>
+                </form>
+            </div>
+        </div>
+    </div>
     <script src="../js/typography.js"></script>
     <script src="../js/layout-fix.js"></script>
     <script src="../js/sticky-fix.js"></script>
     <script src="../js/what-eat-align.js"></script>
     <script src="../js/popular-slider.js"></script>
+    <script src="../js/feedback-widget.js"></script>
 </body>
 
 </html>
