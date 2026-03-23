@@ -22,6 +22,35 @@ body.feedback-lock-scroll {
     pointer-events: none;
 }
 
+.feedback-widget__measure {
+    position: fixed;
+    left: -9999px;
+    top: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.feedback-widget__measure .feedback-widget__content {
+    width: 100%;
+    height: auto;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    pointer-events: none;
+}
+
+.feedback-widget__measure .feedback-widget__title,
+.feedback-widget__measure .feedback-widget__subtitle,
+.feedback-widget__measure .feedback-widget__fields-grid,
+.feedback-widget__measure .feedback-widget__details-grid,
+.feedback-widget__measure .feedback-widget__status,
+.feedback-widget__measure .feedback-widget__submit {
+    opacity: 1;
+    transform: none;
+    transition: none;
+}
+
 .feedback-widget__morph {
     position: absolute;
     right: 24px;
@@ -33,12 +62,11 @@ body.feedback-lock-scroll {
     background-color: var(--color-bg-base);
     overflow: hidden;
     pointer-events: auto;
-    transform-origin: center;
+    transform-origin: bottom right;
     transition:
         width 0.68s cubic-bezier(0.19, 1, 0.22, 1),
         height 0.68s cubic-bezier(0.19, 1, 0.22, 1),
         border-radius 0.62s cubic-bezier(0.19, 1, 0.22, 1),
-        right 0.68s cubic-bezier(0.19, 1, 0.22, 1),
         bottom 0.68s cubic-bezier(0.19, 1, 0.22, 1),
         transform 0.68s cubic-bezier(0.19, 1, 0.22, 1),
         background-color 170ms ease,
@@ -95,12 +123,14 @@ body.feedback-lock-scroll {
 .feedback-widget__content {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: auto;
     background-color: var(--color-bg-base);
     padding: 64px 28px 24px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 16px;
+    overflow: hidden;
     opacity: 0;
     visibility: hidden;
     transform: translateY(8px) scale(0.996);
@@ -184,12 +214,6 @@ body.feedback-lock-scroll {
 }
 
 .feedback-widget__form {
-    flex: 1;
-    min-height: 0;
-    overflow-y: visible;
-    overflow-x: visible;
-    padding-right: 0;
-    margin-right: 0;
     display: flex;
     flex-direction: column;
     gap: 32px;
@@ -205,7 +229,7 @@ body.feedback-lock-scroll {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 32px;
-    align-items: stretch;
+    align-items: start;
 }
 
 .feedback-widget__side {
@@ -219,7 +243,7 @@ body.feedback-lock-scroll {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-top: auto;
+    margin-top: 0;
 }
 
 .feedback-widget__field {
@@ -387,12 +411,10 @@ body.feedback-lock-scroll {
     background-color: #e8df75;
 }
 
-.feedback-widget__form::-webkit-scrollbar,
 .feedback-widget__field textarea::-webkit-scrollbar {
     width: 7px;
 }
 
-.feedback-widget__form::-webkit-scrollbar-thumb,
 .feedback-widget__field textarea::-webkit-scrollbar-thumb {
     background-color: rgba(24, 24, 24, 0.35);
     border-radius: 999px;
@@ -409,13 +431,12 @@ body.feedback-lock-scroll {
 }
 
 .feedback-widget.is-open .feedback-widget__morph {
-    right: 50%;
     top: auto;
     bottom: 24px;
-    width: calc((100vw - 160px) / 2 - 8px);
-    height: auto;
+    width: var(--feedback-open-width, calc((100vw - 160px) / 2 - 8px));
+    height: min(var(--feedback-open-height, 724px), calc(100vh - 48px));
     border-radius: 34px;
-    transform: translateX(50%) scale(1);
+    transform: translateY(-4px) scale(1);
 }
 
 .feedback-widget.is-open .feedback-widget__trigger {
@@ -469,7 +490,7 @@ body.feedback-lock-scroll {
 
 @media (max-width: 1440px) and (min-width: 1195px) {
     .feedback-widget.is-open .feedback-widget__morph {
-        width: calc(((100vw - 160px) * 2 / 3) - 5.34px);
+        width: var(--feedback-open-width, calc(((100vw - 160px) * 2 / 3) - 5.34px));
     }
 }
 
@@ -484,8 +505,8 @@ body.feedback-lock-scroll {
     .feedback-widget.is-open .feedback-widget__morph {
         top: auto;
         bottom: 20px;
-        width: calc(((100vw - 128px) * 5 / 6) - 2.67px);
-        height: auto;
+        width: var(--feedback-open-width, calc(((100vw - 128px) * 5 / 6) - 2.67px));
+        height: min(var(--feedback-open-height, 684px), calc(100vh - 40px));
     }
 }
 
@@ -496,10 +517,10 @@ body.feedback-lock-scroll {
     }
 
     .feedback-widget.is-open .feedback-widget__morph {
-        width: calc(100vw - 64px);
+        width: var(--feedback-open-width, calc(100vw - 64px));
         top: auto;
         bottom: 16px;
-        height: auto;
+        height: min(var(--feedback-open-height, 648px), calc(100vh - 32px));
         border-radius: 28px;
     }
 
@@ -560,10 +581,10 @@ body.feedback-lock-scroll {
     }
 
     .feedback-widget.is-open .feedback-widget__morph {
-        width: calc(100vw - 64px);
+        width: var(--feedback-open-width, calc(100vw - 64px));
         top: auto;
         bottom: 10px;
-        height: auto;
+        height: min(var(--feedback-open-height, 588px), calc(100vh - 20px));
         border-radius: 24px;
     }
 
@@ -614,5 +635,65 @@ body.feedback-lock-scroll {
     .feedback-widget__submit {
         min-height: 44px;
         font-size: 18px;
+    }
+}
+
+@media (max-height: 860px) {
+    .feedback-widget__content {
+        padding: 56px 24px 18px;
+    }
+
+    .feedback-widget__form,
+    .feedback-widget__fields-grid,
+    .feedback-widget__details-grid,
+    .feedback-widget__side {
+        gap: 20px;
+    }
+
+    .feedback-widget__message-field textarea {
+        min-height: 172px;
+        max-height: 172px;
+    }
+}
+
+@media (max-height: 740px) {
+    .feedback-widget__content {
+        padding: 52px 20px 16px;
+        gap: 12px;
+    }
+
+    .feedback-widget__subtitle,
+    .feedback-widget__hint,
+    .feedback-widget__label-text {
+        line-height: 1.15;
+    }
+
+    .feedback-widget__form,
+    .feedback-widget__fields-grid,
+    .feedback-widget__details-grid,
+    .feedback-widget__side {
+        gap: 16px;
+    }
+
+    .feedback-widget__field {
+        gap: 6px;
+    }
+
+    .feedback-widget__field input,
+    .feedback-widget__field textarea {
+        padding: 10px 12px;
+    }
+
+    .feedback-widget__message-field textarea {
+        min-height: 136px;
+        max-height: 136px;
+    }
+
+    .feedback-widget__checkbox {
+        font-size: 14px;
+    }
+
+    .feedback-widget__submit {
+        min-height: 44px;
     }
 }

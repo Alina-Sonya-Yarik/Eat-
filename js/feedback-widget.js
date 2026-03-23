@@ -10,6 +10,7 @@
     const closeButton = root.querySelector('[data-feedback-close]');
     const overlay = root.querySelector('[data-feedback-overlay]');
     const form = root.querySelector('[data-feedback-form]');
+    const content = root.querySelector('.feedback-widget__content');
     const phoneInput = root.querySelector('[data-feedback-phone]');
     const statusNode = root.querySelector('[data-feedback-status]');
     const firstInput = form ? form.querySelector('input, textarea') : null;
@@ -18,7 +19,7 @@
     let closeClassTimer = null;
     let lockedScrollY = 0;
 
-    if (!morph || !openButton || !closeButton || !overlay || !form || !statusNode) {
+    if (!morph || !openButton || !closeButton || !overlay || !form || !content || !statusNode) {
         return;
     }
 
@@ -212,8 +213,71 @@
         clearCloseTimer();
     }
 
+    function getViewportInset() {
+        if (window.innerWidth <= 480) {
+            return 20;
+        }
+
+        if (window.innerWidth <= 834) {
+            return 32;
+        }
+
+        if (window.innerWidth <= 1194) {
+            return 40;
+        }
+
+        return 48;
+    }
+
+    function getOpenWidth() {
+        const viewportWidth = window.innerWidth;
+
+        if (viewportWidth <= 834) {
+            return Math.max(280, viewportWidth - 64);
+        }
+
+        if (viewportWidth <= 1194) {
+            return Math.max(320, ((viewportWidth - 128) * 5 / 6) - 2.67);
+        }
+
+        if (viewportWidth <= 1440) {
+            return Math.max(360, ((viewportWidth - 160) * 2 / 3) - 5.34);
+        }
+
+        return Math.max(360, ((viewportWidth - 160) / 2) - 8);
+    }
+
+    function getContentHeightForWidth(targetWidth) {
+        const measureNode = document.createElement('div');
+        const contentClone = content.cloneNode(true);
+
+        measureNode.className = 'feedback-widget__measure';
+        measureNode.style.width = `${Math.ceil(targetWidth)}px`;
+        measureNode.appendChild(contentClone);
+        document.body.appendChild(measureNode);
+
+        const measuredHeight = Math.ceil(measureNode.scrollHeight);
+        measureNode.remove();
+
+        return measuredHeight;
+    }
+
+    function syncOpenSize() {
+        morph.style.removeProperty('--feedback-open-width');
+        morph.style.removeProperty('--feedback-open-height');
+
+        const targetWidth = getOpenWidth();
+        const maxHeight = Math.max(320, window.innerHeight - getViewportInset());
+        const contentHeight = getContentHeightForWidth(targetWidth);
+        const targetHeight = Math.min(contentHeight, maxHeight);
+
+        morph.style.setProperty('--feedback-open-width', `${Math.ceil(targetWidth)}px`);
+        morph.style.setProperty('--feedback-open-height', `${targetHeight}px`);
+    }
+
     function openWidget() {
         clearClosingState();
+        syncOpenSize();
         root.classList.add('is-open');
         lockPageScroll(true);
         setExpanded(true);
@@ -262,6 +326,14 @@
         if (event.key === 'Escape' && (isWidgetOpen() || root.classList.contains('is-closing'))) {
             closeWidget(false);
         }
+    });
+
+    window.addEventListener('resize', () => {
+        if (!isWidgetOpen()) {
+            return;
+        }
+
+        syncOpenSize();
     });
 
     morph.addEventListener('transitionend', event => {
