@@ -21,6 +21,7 @@
             image_url: 'https://picsum.photos/seed/restaurant-01-a/1200/1200',
             image_url_2: 'https://picsum.photos/seed/restaurant-01-b/1200/1200',
             image_url_3: 'https://picsum.photos/seed/restaurant-01-c/1200/1200',
+            website_url: '',
         },
         {
             name: 'Ресторан 02',
@@ -29,6 +30,7 @@
             image_url: 'https://picsum.photos/seed/restaurant-02-a/1200/1200',
             image_url_2: 'https://picsum.photos/seed/restaurant-02-b/1200/1200',
             image_url_3: 'https://picsum.photos/seed/restaurant-02-c/1200/1200',
+            website_url: '',
         },
         {
             name: 'Ресторан 03',
@@ -37,6 +39,7 @@
             image_url: 'https://picsum.photos/seed/restaurant-03-a/1200/1200',
             image_url_2: 'https://picsum.photos/seed/restaurant-03-b/1200/1200',
             image_url_3: 'https://picsum.photos/seed/restaurant-03-c/1200/1200',
+            website_url: '',
         },
         {
             name: 'Ресторан 04',
@@ -45,6 +48,7 @@
             image_url: 'https://picsum.photos/seed/restaurant-04-a/1200/1200',
             image_url_2: 'https://picsum.photos/seed/restaurant-04-b/1200/1200',
             image_url_3: 'https://picsum.photos/seed/restaurant-04-c/1200/1200',
+            website_url: '',
         },
         {
             name: 'Ресторан 05',
@@ -53,6 +57,7 @@
             image_url: 'https://picsum.photos/seed/restaurant-05-a/1200/1200',
             image_url_2: 'https://picsum.photos/seed/restaurant-05-b/1200/1200',
             image_url_3: 'https://picsum.photos/seed/restaurant-05-c/1200/1200',
+            website_url: '',
         },
         {
             name: 'Ресторан 06',
@@ -61,6 +66,7 @@
             image_url: 'https://picsum.photos/seed/restaurant-06-a/1200/1200',
             image_url_2: 'https://picsum.photos/seed/restaurant-06-b/1200/1200',
             image_url_3: 'https://picsum.photos/seed/restaurant-06-c/1200/1200',
+            website_url: '',
         },
         {
             name: 'Ресторан 07',
@@ -69,6 +75,7 @@
             image_url: 'https://picsum.photos/seed/restaurant-07-a/1200/1200',
             image_url_2: 'https://picsum.photos/seed/restaurant-07-b/1200/1200',
             image_url_3: 'https://picsum.photos/seed/restaurant-07-c/1200/1200',
+            website_url: '',
         },
         {
             name: 'Ресторан 08',
@@ -77,6 +84,7 @@
             image_url: 'https://picsum.photos/seed/restaurant-08-a/1200/1200',
             image_url_2: 'https://picsum.photos/seed/restaurant-08-b/1200/1200',
             image_url_3: 'https://picsum.photos/seed/restaurant-08-c/1200/1200',
+            website_url: '',
         },
         {
             name: 'Ресторан 09',
@@ -85,6 +93,7 @@
             image_url: 'https://picsum.photos/seed/restaurant-09-a/1200/1200',
             image_url_2: 'https://picsum.photos/seed/restaurant-09-b/1200/1200',
             image_url_3: 'https://picsum.photos/seed/restaurant-09-c/1200/1200',
+            website_url: '',
         },
         {
             name: 'Ресторан 10',
@@ -93,6 +102,7 @@
             image_url: 'https://picsum.photos/seed/restaurant-10-a/1200/1200',
             image_url_2: 'https://picsum.photos/seed/restaurant-10-b/1200/1200',
             image_url_3: 'https://picsum.photos/seed/restaurant-10-c/1200/1200',
+            website_url: '',
         },
     ];
 
@@ -120,6 +130,7 @@
             restaurant.image_url_2 || restaurant.image_url,
             restaurant.image_url_3 || restaurant.image_url_2 || restaurant.image_url,
         ];
+        const websiteUrl = String(restaurant.website_url || '').trim();
         const label = restaurant.cuisine ? `<p class="popular-card__eyebrow">${escapeHtml(restaurant.cuisine)}</p>` : '';
         const summary = restaurant.short_description
             ? `<p class="popular-card__summary">${escapeHtml(restaurant.short_description)}</p>`
@@ -127,16 +138,21 @@
         const mediaMarkup = imageSet
             .map((imageUrl, index) => buildMediaMarkup(imageUrl, index + 1))
             .join('');
+        const cardTag = websiteUrl ? 'a' : 'article';
+        const cardAttributes = websiteUrl
+            ? ` href="${escapeHtml(websiteUrl)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(restaurant.name)}"`
+            : ` aria-label="${escapeHtml(restaurant.name)}"`;
+        const clickableClass = websiteUrl ? ' popular-restaurant-card--clickable' : '';
 
         return `
-            <article class="popular-restaurant-card is-zone-1" aria-label="${escapeHtml(restaurant.name)}">
+            <${cardTag} class="popular-restaurant-card popular-restaurant-card--link-reset is-zone-1${clickableClass}"${cardAttributes}>
                 ${mediaMarkup}
                 <div class="popular-card__overlay">
                     ${label}
                     <h3 class="popular-card__title">${escapeHtml(restaurant.name)}</h3>
                     ${summary}
                 </div>
-            </article>
+            </${cardTag}>
         `;
     }
 
@@ -234,7 +250,7 @@
         try {
             const { data, error } = await client
                 .from('restaurants')
-                .select('name, cuisine, short_description, image_url, image_url_2, image_url_3, sort_order')
+                .select('name, cuisine, short_description, image_url, image_url_2, image_url_3, website_url, sort_order')
                 .eq('is_published', true)
                 .order('sort_order', { ascending: true })
                 .order('created_at', { ascending: false });

@@ -18,7 +18,7 @@ body.feedback-lock-scroll {
     inset: 0;
     background-color: rgba(24, 24, 24, 0.35);
     opacity: 0;
-    transition: opacity 0.32s ease;
+    transition: opacity 0.5s ease;
     pointer-events: none;
 }
 
@@ -33,17 +33,18 @@ body.feedback-lock-scroll {
     background-color: var(--color-bg-base);
     overflow: hidden;
     pointer-events: auto;
+    transform-origin: center;
     transition:
-        width 0.5s cubic-bezier(0.22, 0.9, 0.3, 1),
-        height 0.5s cubic-bezier(0.22, 0.9, 0.3, 1),
-        border-radius 0.45s ease,
-        right 0.5s cubic-bezier(0.22, 0.9, 0.3, 1),
-        bottom 0.5s cubic-bezier(0.22, 0.9, 0.3, 1),
-        transform 0.5s cubic-bezier(0.22, 0.9, 0.3, 1),
+        width 0.68s cubic-bezier(0.19, 1, 0.22, 1),
+        height 0.68s cubic-bezier(0.19, 1, 0.22, 1),
+        border-radius 0.62s cubic-bezier(0.19, 1, 0.22, 1),
+        right 0.68s cubic-bezier(0.19, 1, 0.22, 1),
+        bottom 0.68s cubic-bezier(0.19, 1, 0.22, 1),
+        transform 0.68s cubic-bezier(0.19, 1, 0.22, 1),
         background-color 170ms ease,
         border-color 170ms ease,
         box-shadow 0.35s ease;
-    transform: translateX(0);
+    transform: translateX(0) scale(1);
 }
 
 .feedback-widget:not(.is-open):not(.is-closing) .feedback-widget__morph:hover {
@@ -102,12 +103,44 @@ body.feedback-lock-scroll {
     gap: 16px;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(14px);
+    transform: translateY(8px) scale(0.996);
     pointer-events: none;
     transition:
-        opacity 0.2s ease,
-        transform 0.3s ease,
-        visibility 0s linear 0.32s;
+        opacity 0.34s ease,
+        transform 0.6s cubic-bezier(0.19, 1, 0.22, 1),
+        visibility 0s linear 0.52s;
+}
+
+.feedback-widget__title,
+.feedback-widget__subtitle,
+.feedback-widget__fields-grid,
+.feedback-widget__details-grid,
+.feedback-widget__status,
+.feedback-widget__submit {
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+        opacity 0.34s ease,
+        transform 0.56s cubic-bezier(0.19, 1, 0.22, 1),
+        color 180ms ease,
+        border-color 180ms ease,
+        background-color 180ms ease;
+}
+
+.feedback-widget__subtitle {
+    transform: translateY(14px);
+}
+
+.feedback-widget__fields-grid {
+    transform: translateY(16px);
+}
+
+.feedback-widget__details-grid {
+    transform: translateY(18px);
+}
+
+.feedback-widget__submit {
+    transform: translateY(14px);
 }
 
 .feedback-widget__close {
@@ -324,6 +357,7 @@ body.feedback-lock-scroll {
     line-height: 1;
     cursor: pointer;
     transition:
+        opacity 0.3s ease,
         transform 180ms cubic-bezier(0.25, 1, 0.5, 1),
         color 180ms ease,
         border-color 180ms ease,
@@ -381,7 +415,7 @@ body.feedback-lock-scroll {
     width: calc((100vw - 160px) / 2 - 8px);
     height: auto;
     border-radius: 34px;
-    transform: translateX(50%);
+    transform: translateX(50%) scale(1);
 }
 
 .feedback-widget.is-open .feedback-widget__trigger {
@@ -393,9 +427,40 @@ body.feedback-lock-scroll {
 .feedback-widget.is-open .feedback-widget__content {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
     pointer-events: auto;
-    transition-delay: 0.14s, 0.14s, 0s;
+    transition-delay: 0.18s, 0.18s, 0s;
+}
+
+.feedback-widget.is-open .feedback-widget__title,
+.feedback-widget.is-open .feedback-widget__subtitle,
+.feedback-widget.is-open .feedback-widget__fields-grid,
+.feedback-widget.is-open .feedback-widget__details-grid,
+.feedback-widget.is-open .feedback-widget__status,
+.feedback-widget.is-open .feedback-widget__submit {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.feedback-widget.is-open .feedback-widget__title {
+    transition-delay: 0.28s;
+}
+
+.feedback-widget.is-open .feedback-widget__subtitle {
+    transition-delay: 0.34s;
+}
+
+.feedback-widget.is-open .feedback-widget__fields-grid {
+    transition-delay: 0.4s;
+}
+
+.feedback-widget.is-open .feedback-widget__details-grid {
+    transition-delay: 0.48s;
+}
+
+.feedback-widget.is-open .feedback-widget__submit,
+.feedback-widget.is-open .feedback-widget__status {
+    transition-delay: 0.56s;
 }
 
 .feedback-widget.is-closing .feedback-widget__content {

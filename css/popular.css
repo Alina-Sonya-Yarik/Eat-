@@ -90,6 +90,15 @@
         border-color 320ms ease;
 }
 
+.popular-restaurant-card--link-reset {
+    color: inherit;
+    text-decoration: none;
+}
+
+.popular-restaurant-card--clickable {
+    cursor: pointer;
+}
+
 .popular-restaurant-card::after {
     content: '';
     position: absolute;

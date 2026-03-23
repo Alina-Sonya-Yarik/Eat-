@@ -222,7 +222,7 @@
         if (firstInput) {
             setTimeout(() => {
                 firstInput.focus();
-            }, 170);
+            }, 620);
         }
     }
 
