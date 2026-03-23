@@ -1,122 +1,228 @@
 .footer {
     background-color: #fc5600;
-    padding: 272px 0 128px 0;
-    height: auto;
-    box-sizing: border-box;
     margin-top: -144px;
-    z-index: 4;
+    padding: 272px 0 128px 0;
     position: relative;
-}
-
-.footer-branding {
-    font-family: var(--font-body);
-    font-weight: 800;
-    color: var(--color-bg-base);
-    font-size: 280px;
-    line-height: 1;
-    text-align: center;
-    white-space: nowrap;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 272px;
-    z-index: 1;
-    width: 100vw;
+    z-index: 4;
+    overflow: hidden;
 }
 
 .footer-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    padding-top: 360px;
+    min-height: clamp(210px, 22vw, 350px);
+    position: relative;
 }
 
 .footer-row {
     background-color: var(--color-bg-base);
-    border-radius: 48px;
     border: 4px solid var(--color-black);
-    padding: 20px 60px;
+    border-radius: 48px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-}
-
-.footer-logo {
-    width: 115px;
-    height: auto;
-}
-
-.footer-social-media {
-    display: flex;
-    gap: 20px;
-}
-
-.footer-social-media img {
-    width: 41px;
-    height: 41px;
-    transition: opacity 0.3s ease;
+    justify-content: space-between;
+    gap: clamp(16px, 2vw, 34px);
+    min-height: clamp(86px, 8vw, 118px);
+    padding: clamp(12px, 1.2vw, 20px) clamp(18px, 3vw, 60px);
+    position: relative;
+    z-index: 3;
 }
 
 .footer-email-button {
     border: 2px solid var(--color-primary);
-    border-radius: 48px;
-    padding: 15px 40px;
-    text-decoration: none;
+    border-radius: 999px;
     color: var(--color-black);
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 85px;
+    min-height: 56px;
+    min-width: clamp(220px, 22vw, 320px);
+    padding: 10px clamp(20px, 2.2vw, 40px);
+    flex-shrink: 0;
 }
 
 .footer-email-text {
     font-family: var(--font-body);
+    font-size: clamp(24px, 2.1vw, 36px);
     font-weight: 500;
-    font-size: 30px;
+    line-height: 1;
 }
 
-.footer-scroll-up {
-    width: 61px;
-    height: 56px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    align-self: center;
+.footer-logo {
+    width: clamp(58px, 6vw, 84px);
+    height: auto;
+    flex-shrink: 0;
 }
 
-.footer-scroll-up img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+.footer-social-media {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 1.2vw, 22px);
+    flex-shrink: 0;
 }
 
-/* --- Media Queries --- */
+.footer-social-media a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+}
+
+.footer-social-media img {
+    display: block;
+    transition: opacity 0.2s ease;
+}
+
+.footer-social-media a:first-child img {
+    width: clamp(30px, 2.5vw, 42px);
+}
+
+.footer-social-media a:last-child img {
+    width: clamp(34px, 2.8vw, 48px);
+}
+
+.footer-social-media a:hover img {
+    opacity: 0.75;
+}
+
+.footer-branding {
+    color: var(--color-bg-base);
+    font-family: var(--font-body);
+    font-size: clamp(128px, 17vw, 286px);
+    font-weight: 800;
+    line-height: 0.82;
+    position: absolute;
+    top: clamp(132px, 12vw, 194px);
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1;
+}
 
 @media (max-width: 1440px) {
+    .footer {
+        padding-top: 240px;
+        padding-bottom: 96px;
+    }
+
     .footer-branding {
-        font-size: 200px;
+        font-size: clamp(118px, 16vw, 230px);
     }
 }
 
 @media (max-width: 1194px) {
-    /* No specific changes for 1194px yet */
-}
-
-@media (max-width: 834px) {
-    .footer-branding {
-        font-size: 120px;
+    .footer {
+        padding-top: 224px;
+        padding-bottom: 80px;
     }
 
     .footer-row {
-        flex-direction: column;
-        gap: 20px;
-        height: auto;
-        padding: 40px;
+        padding: 12px 30px;
+    }
+
+    .footer-email-text {
+        font-size: clamp(20px, 2.5vw, 30px);
+    }
+
+    .footer-branding {
+        top: 120px;
+        font-size: clamp(112px, 17vw, 200px);
+    }
+}
+
+@media (max-width: 834px) {
+    .footer {
+        padding-top: 224px;
+        padding-bottom: 80px;
+    }
+
+    .footer-grid {
+        min-height: 190px;
+    }
+
+    .footer-row {
+        border-width: 3px;
+        border-radius: 36px;
+        min-height: 78px;
+        padding: 10px 18px;
+        gap: 14px;
+    }
+
+    .footer-email-button {
+        min-height: 52px;
+        min-width: 0;
+        /* width: clamp(190px, 55vw, 320px); */
+        padding: 12px 32px;
+    }
+
+    .footer-email-text {
+        font-size: clamp(18px, 2.5vw, 28px);
+    }
+
+    .footer-logo {
+        display: none;
+    }
+
+    .footer-social-media {
+        gap: 12px;
+    }
+
+    .footer-social-media a:first-child img {
+        width: clamp(26px, 6vw, 38px);
+    }
+
+    .footer-social-media a:last-child img {
+        width: clamp(30px, 7vw, 44px);
+    }
+
+    .footer-branding {
+        top: 108px;
+        transform: translateX(-46%);
+        font-size: clamp(98px, 23vw, 168px);
     }
 }
 
 @media (max-width: 480px) {
-    /* No specific changes for 480px yet */
+    .footer {
+        padding-top: 208px;
+        padding-bottom: 64px;
+    }
+
+    .footer-grid {
+        min-height: 160px;
+    }
+
+    .footer-row {
+        border-radius: 28px;
+        min-height: 70px;
+        padding: 8px 12px;
+    }
+
+    .footer-email-button {
+        /* width: clamp(154px, 56vw, 250px); */
+        min-height: 44px;
+        padding: 12px 24px;
+    }
+
+    .footer-email-text {
+        font-size: clamp(16px, 4vw, 22px);
+    }
+
+    .footer-social-media {
+        gap: 10px;
+    }
+
+    .footer-social-media a:first-child img {
+        width: 30px;
+    }
+
+    .footer-social-media a:last-child img {
+        width: 34px;
+    }
+
+    .footer-branding {
+        top: 96px;
+        font-size: clamp(86px, 30vw, 126px);
+    }
 }
 
 /* Unified vertical section spacing scale (desktop/laptop/tablet/phone) */
@@ -132,8 +238,7 @@
 .cashback,
 .how-it-works,
 .popular-restaurants,
-.download,
-.footer {
+.download {
     padding-top: calc(var(--section-pad-desktop) + var(--section-overlap-offset));
     padding-bottom: var(--section-pad-desktop);
 }
@@ -147,8 +252,7 @@
     .cashback,
     .how-it-works,
     .popular-restaurants,
-    .download,
-    .footer {
+    .download {
         padding-top: calc(var(--section-pad-laptop) + var(--section-overlap-offset));
         padding-bottom: var(--section-pad-laptop);
     }
@@ -163,8 +267,7 @@
     .cashback,
     .how-it-works,
     .popular-restaurants,
-    .download,
-    .footer {
+    .download {
         padding-top: calc(var(--section-pad-tablet) + var(--section-overlap-offset));
         padding-bottom: var(--section-pad-tablet);
     }
@@ -179,8 +282,7 @@
     .cashback,
     .how-it-works,
     .popular-restaurants,
-    .download,
-    .footer {
+    .download {
         padding-top: calc(var(--section-pad-phone) + var(--section-overlap-offset));
         padding-bottom: var(--section-pad-phone);
     }

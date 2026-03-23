@@ -12,6 +12,8 @@
 .download-grid {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto auto;
+    height: auto;
     align-items: center;
     row-gap: 40px;
 }
@@ -53,12 +55,15 @@
     grid-column: 1 / span 12;
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
+    gap: clamp(24px, 3.2vw, 64px);
     position: relative;
 }
 
 .download-left-elements {
     display: flex;
     flex-direction: column;
+    max-width: min(760px, 100%);
     z-index: 10;
     position: relative;
 }
@@ -68,42 +73,66 @@
     align-items: flex-end;
     position: relative;
     z-index: 10;
+    --download-mockup-primary-size: clamp(220px, 26vw, 434px);
+    --download-mockup-secondary-size: clamp(176px, 26vw, 560px);
 }
 
 .download-mockup-1 {
-    margin-left: -120px;
+    width: var(--download-mockup-secondary-size);
+    height: auto;
+    margin-left: clamp(-120px, -7vw, -72px);
     position: relative;
     z-index: 2;
+    flex: 0 1 var(--download-mockup-secondary-size);
 }
 
 .download-mockup-2 {
+    width: var(--download-mockup-primary-size);
+    height: auto;
     position: relative;
     z-index: 5;
+    flex: 0 1 var(--download-mockup-primary-size);
 }
 
 .download-buttons {
     display: flex;
     gap: 16px;
-    padding-left: 40px;
-    margin-top: -128px;
+    padding-left: clamp(12px, 2vw, 40px);
+    margin-top: clamp(-128px, -7vw, -64px);
     z-index: 50;
+}
+
+.download-buttons a {
+    display: block;
+    width: clamp(170px, 18vw, 260px);
+}
+
+.download-buttons img {
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
 .download-mascot-wrapper {
     position: relative;
-    z-index: 1;
+    z-index: 10;
+    flex-shrink: 0;
 }
 
 .download-gift-heart {
-    width: 718px;
-    height: 922px;
-    object-fit: cover;
+    width: min(718px, 42vw);
+    height: auto;
+    object-fit: contain;
     display: block;
 }
 
 /* --- Media Queries --- */
 
 @media (max-width: 1440px) {
+    .download-title {
+        font-size: 60px;
+    }
+
     .download-subtitle,
     .download-bonus {
         font-size: 28px;
@@ -111,30 +140,147 @@
 }
 
 @media (max-width: 1194px) {
-    /* No specific changes for 1194px yet */
+    .download-title {
+        font-size: 52px;
+    }
+
+    .download-subtitle,
+    .download-bonus {
+        font-size: 24px;
+    }
+
+    .download-mockups {
+        --download-mockup-primary-size: clamp(190px, 32vw, 320px);
+        --download-mockup-secondary-size: clamp(146px, 32vw, 320px);
+    }
+
+    .download-mockup-1 {
+        margin-left: clamp(-102px, -9vw, -64px);
+    }
+
+    .download-gift-heart {
+        width: min(460px, 40vw);
+    }
 }
 
 @media (max-width: 834px) {
+    .download {
+        border-radius: 0 0 50px 50px;
+    }
+
+    .download-title {
+        font-size: 39px;
+        margin-bottom: 40px;
+    }
+
     .download-subtitle,
     .download-bonus {
         font-size: 22px;
     }
 
     .download-content {
-        flex-direction: column;
-        align-items: center;
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .download-left-elements {
+        width: auto;
+        max-width: min(520px, 66%);
+    }
+
+    .download-mockups {
+        --download-mockup-primary-size: clamp(180px, 32vw, 300px);
+        --download-mockup-secondary-size: clamp(140px, 34vw, 230px);
+    }
+
+    .download-mockup-1 {
+        margin-left: clamp(-92px, -11vw, -56px);
     }
 
     .download-buttons {
         margin-top: 20px;
         padding-left: 0;
-        justify-content: center;
+        justify-content: flex-start;
+    }
+
+    .download-mascot-wrapper {
+        align-self: flex-end;
+        margin-bottom: 4em;
+        /* margin-right: 38em; */
+        margin-left: -10em;
+    }
+
+    .download-gift-heart {
+        width: min(400px, 42vw);
     }
 }
 
 @media (max-width: 480px) {
+    .download {
+        border-radius: 0 0 32px 32px;
+    }
+
+    .download-title {
+        font-size: 30px;
+        margin-bottom: 32px;
+    }
+
     .download-subtitle,
     .download-bonus {
         font-size: 20px;
+    }
+
+    .download-content {
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: space-between;
+        position: relative;
+        min-height: 0;
+        gap: 10px;
+        margin-top: 8px;
+    }
+
+    .download-left-elements {
+        width: auto;
+        max-width: min(250px, 64%);
+        z-index: 3;
+    }
+
+    .download-mockups {
+        --download-mockup-primary-size: clamp(142px, 44vw, 220px);;
+        --download-mockup-secondary-size: clamp(116px, 47vw, 220px);
+    }
+
+    .download-mockup-1 {
+        margin-left: clamp(-76px, -19vw, -44px);
+    }
+
+    .download-buttons {
+        margin-top: 12px;
+        gap: 8px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .download-buttons a {
+        width: clamp(132px, 44vw, 180px);
+    }
+
+    .download-mascot-wrapper {
+        position: relative;
+        right: -4.5em;
+        bottom: auto;
+        width: clamp(118px, 52vw, 250px);
+        z-index: 10;
+        align-self: flex-end;
+        margin-top: 0;
+        margin-bottom: 2em;
+    }
+
+    .download-gift-heart {
+        width: 100%;
+        max-width: none;
     }
 }
