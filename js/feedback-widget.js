@@ -229,11 +229,28 @@
         return 48;
     }
 
-    function getOpenWidth() {
-        const viewportWidth = window.innerWidth;
+    function getHorizontalInset() {
+        if (window.innerWidth <= 480) {
+            return 12;
+        }
 
-        if (viewportWidth <= 834) {
-            return Math.max(280, viewportWidth - 64);
+        if (isFullWidthLayout()) {
+            return 16;
+        }
+
+        return 0;
+    }
+
+    function isFullWidthLayout() {
+        return window.innerWidth <= 834
+            || (window.innerWidth <= 1194 && window.matchMedia('(orientation: portrait)').matches);
+    }
+
+    function getOpenWidth() {
+        const viewportWidth = document.documentElement.clientWidth || window.innerWidth;
+
+        if (isFullWidthLayout()) {
+            return Math.max(280, viewportWidth - (getHorizontalInset() * 2));
         }
 
         if (viewportWidth <= 1194) {
@@ -269,7 +286,7 @@
         const targetWidth = getOpenWidth();
         const maxHeight = Math.max(320, window.innerHeight - getViewportInset());
         const contentHeight = getContentHeightForWidth(targetWidth);
-        const targetHeight = Math.min(contentHeight, maxHeight);
+        const targetHeight = Math.min(contentHeight + 7, maxHeight);
 
         morph.style.setProperty('--feedback-open-width', `${Math.ceil(targetWidth)}px`);
         morph.style.setProperty('--feedback-open-height', `${targetHeight}px`);
