@@ -432,7 +432,7 @@
         };
 
         if (!supabase) {
-            setStatus('Заполните `js/supabase-config.js`, чтобы включить отправку формы в базу.', true);
+            setStatus('Заполните `js/supabase-config.js` или задайте `SUPABASE_URL` и `SUPABASE_ANON_KEY` на Vercel, чтобы включить отправку формы в базу.', true);
             return;
         }
 
