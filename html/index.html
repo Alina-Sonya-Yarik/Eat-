@@ -17,10 +17,18 @@
     <link rel="stylesheet" href="../css/popular.css" />
     <link rel="stylesheet" href="../css/download.css" />
     <link rel="stylesheet" href="../css/footer.css" />
+    <link rel="stylesheet" href="../css/preloader.css" />
+    <link rel="stylesheet" href="../css/reveal.css" />
     <link rel="stylesheet" href="../css/feedback-widget.css" />
 </head>
 
 <body>
+    <div class="page-preloader" data-page-preloader data-logo-src="../svg/logo.svg" role="progressbar"
+        aria-label="Загрузка страницы" aria-valuemin="0" aria-valuemax="100" aria-valuenow="10">
+        <div class="page-preloader__inner">
+            <div class="page-preloader__grid" data-preloader-logos></div>
+        </div>
+    </div>
     <div class="page-wrapper">
         <header class="header">
             <div class="container">
@@ -292,6 +300,8 @@
     <script src="../js/layout-fix.js"></script>
     <script src="../js/sticky-fix.js"></script>
     <script src="../js/what-eat-align.js"></script>
+    <script src="../js/page-preloader.js"></script>
+    <script src="../js/page-reveal.js"></script>
     <script src="../js/popular-restaurants.js"></script>
     <script src="../js/popular-slider.js"></script>
     <script src="../js/feedback-widget.js"></script>

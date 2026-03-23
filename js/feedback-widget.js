@@ -26,6 +26,12 @@
     function setStatus(message, isError = false) {
         statusNode.textContent = message;
         statusNode.classList.toggle('is-error', isError);
+
+        if (isWidgetOpen()) {
+            requestAnimationFrame(() => {
+                syncOpenSize();
+            });
+        }
     }
 
     function getFriendlyErrorMessage(error) {
@@ -215,11 +221,15 @@
 
     function getViewportInset() {
         if (window.innerWidth <= 480) {
-            return 20;
+            return 8;
         }
 
         if (window.innerWidth <= 834) {
-            return 32;
+            return 20;
+        }
+
+        if (window.innerWidth <= 1194 && window.matchMedia('(orientation: portrait)').matches) {
+            return 24;
         }
 
         if (window.innerWidth <= 1194) {

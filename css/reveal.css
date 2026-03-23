@@ -1,0 +1,51 @@
+.reveal-ready {
+    opacity: 0;
+    filter: blur(16px);
+    transition:
+        opacity var(--reveal-duration, 640ms) var(--ease-spring-soft),
+        filter var(--reveal-duration, 640ms) var(--ease-spring-soft),
+        transform var(--reveal-duration, 640ms) var(--ease-spring-soft);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, filter, transform;
+}
+
+.reveal-fade-up.reveal-ready {
+    transform: translate3d(0, var(--reveal-distance, 34px), 0);
+}
+
+.reveal-visible {
+    opacity: 1;
+    filter: blur(0);
+}
+
+.reveal-fade-up.reveal-visible {
+    transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal-ready,
+    .reveal-visible,
+    .reveal-fade.reveal-ready,
+    .reveal-fade.reveal-visible {
+        opacity: 1;
+        filter: none;
+        transition: none;
+    }
+
+    .reveal-fade-up.reveal-ready,
+    .reveal-fade-up.reveal-visible {
+        opacity: 1;
+        filter: none;
+        transform: none;
+        transition: none;
+    }
+
+    .reveal-ready,
+    .reveal-visible,
+    .reveal-fade.reveal-ready,
+    .reveal-fade.reveal-visible,
+    .reveal-fade-up.reveal-ready,
+    .reveal-fade-up.reveal-visible {
+        will-change: auto;
+    }
+}

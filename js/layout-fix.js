@@ -261,6 +261,12 @@ function onResize() {
     }, RESIZE_DEBOUNCE_MS);
 }
 
+window.sectionLayoutFix = {
+    schedule: scheduleAdjustSectionPaddings,
+    flush: adjustSectionPaddings,
+    clearCache: () => BASE_PADDING_CACHE.clear(),
+};
+
 document.addEventListener('DOMContentLoaded', scheduleAdjustSectionPaddings);
 window.addEventListener('load', scheduleAdjustSectionPaddings);
 window.addEventListener('resize', onResize);

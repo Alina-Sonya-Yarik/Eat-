@@ -112,6 +112,11 @@ function onStickyResize() {
     stickyResizeTimer = setTimeout(scheduleStickyFix, 120);
 }
 
+window.heroStickyFix = {
+    schedule: scheduleStickyFix,
+    flush: fixStickyPosition,
+};
+
 // Execute on load and resize
 window.addEventListener('resize', onStickyResize);
 window.addEventListener('orientationchange', () => {

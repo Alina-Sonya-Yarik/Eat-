@@ -1,0 +1,107 @@
+.preloader-lock {
+    overflow: hidden;
+}
+
+.page-preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    background:
+        radial-gradient(circle at top left, rgba(247, 237, 77, 0.92), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(208, 22, 81, 0.16), transparent 28%),
+        linear-gradient(135deg, #fefde2 0%, #fff9cd 42%, #ffd88f 100%);
+    transition:
+        opacity 520ms var(--ease-spring-soft),
+        transform 520ms var(--ease-spring-soft);
+}
+
+.page-preloader.is-complete {
+    opacity: 0;
+    transform: scale(1.02);
+    pointer-events: none;
+}
+
+.page-preloader__inner {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-preloader__grid {
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-preloader__item {
+    position: relative;
+    width: clamp(120px, 18vw, 220px);
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    flex: 0 0 auto;
+}
+
+.page-preloader__logo-base,
+.page-preloader__logo-fill {
+    position: absolute;
+    inset: 0;
+}
+
+.page-preloader__logo-base,
+.page-preloader__logo-fill {
+    -webkit-mask-image: var(--preloader-logo-mask);
+    mask-image: var(--preloader-logo-mask);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+}
+
+.page-preloader__logo-base {
+    background-color: rgba(218, 26, 21, 0.16);
+}
+
+.page-preloader__logo-fill {
+    overflow: hidden;
+}
+
+.page-preloader__logo-liquid {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    block-size: calc(var(--logo-fill, 0) * 1%);
+    background-color: #da1a15;
+    transition: block-size 220ms linear;
+}
+
+@media (max-width: 834px) {
+    .page-preloader__item {
+        width: clamp(108px, 24vw, 180px);
+    }
+}
+
+@media (max-width: 480px) {
+    .page-preloader {
+        padding: 20px;
+    }
+
+    .page-preloader__item {
+        width: clamp(92px, 34vw, 136px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page-preloader,
+    .page-preloader__logo-liquid {
+        transition: none;
+    }
+}

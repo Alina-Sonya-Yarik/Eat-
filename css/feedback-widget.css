@@ -9,7 +9,7 @@ body.feedback-lock-scroll {
 .feedback-widget {
     position: fixed;
     inset: 0;
-    z-index: 1400;
+    z-index: 15;
     pointer-events: none;
 }
 
@@ -298,8 +298,8 @@ body.feedback-lock-scroll {
 }
 
 .feedback-widget__message-field textarea {
-    min-height: 214px;
-    max-height: 214px;
+    /* min-height: 214px;
+    max-height: 214px; */
 }
 
 .feedback-widget__field input:hover,
@@ -483,6 +483,7 @@ body.feedback-lock-scroll {
 .feedback-widget.is-open .feedback-widget__submit,
 .feedback-widget.is-open .feedback-widget__status {
     transition-delay: 0.56s;
+    /* margin-bottom: 8%; */
 }
 
 .feedback-widget.is-closing .feedback-widget__content {
@@ -513,8 +514,8 @@ body.feedback-lock-scroll {
 
 @media (max-width: 1194px) and (orientation: portrait) {
     .feedback-widget.is-open .feedback-widget__morph {
-        left: 16px;
-        right: auto;
+        left: auto;
+        right: 16px;
         width: var(--feedback-open-width, calc(100% - 32px));
     }
 }
@@ -526,16 +527,17 @@ body.feedback-lock-scroll {
     }
 
     .feedback-widget.is-open .feedback-widget__morph {
-        left: 16px;
-        right: auto;
+        left: auto;
+        right: 16px;
         width: var(--feedback-open-width, calc(100% - 32px));
         top: auto;
         bottom: 16px;
-        height: min(var(--feedback-open-height, 648px), calc(100vh - 32px));
+        height: min(calc(var(--feedback-open-height, 760px) + 8px), calc(100vh - 4px));
         border-radius: 28px;
     }
 
     .feedback-widget__content {
+        height: 100%;
         padding: 58px 20px 18px;
     }
 
@@ -553,6 +555,12 @@ body.feedback-lock-scroll {
     }
 
     .feedback-widget__form {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        overflow-x: visible;
+        padding-right: 10px;
+        margin-right: -10px;
         gap: 24px;
     }
 
@@ -574,8 +582,17 @@ body.feedback-lock-scroll {
     }
 
     .feedback-widget__message-field textarea {
-        min-height: 132px;
-        max-height: 180px;
+        /* min-height: 120px; */
+        /* max-height: 164px; */
+    }
+
+    .feedback-widget__form::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .feedback-widget__form::-webkit-scrollbar-thumb {
+        background-color: rgba(24, 24, 24, 0.28);
+        border-radius: 999px;
     }
 }
 
@@ -592,18 +609,18 @@ body.feedback-lock-scroll {
     }
 
     .feedback-widget.is-open .feedback-widget__morph {
-        left: 12px;
-        right: auto;
+        left: auto;
+        right: 12px;
         width: var(--feedback-open-width, calc(100% - 24px));
         top: auto;
-        bottom: 10px;
-        height: min(var(--feedback-open-height, 588px), calc(100vh - 20px));
+        bottom: 6px;
+        height: min(calc(var(--feedback-open-height, 720px) + 8px), 100vh);
         border-radius: 24px;
     }
 
     .feedback-widget__content {
-        padding: 52px 16px 16px;
-        gap: 16px;
+        padding: 48px 16px 12px;
+        gap: 14px;
     }
 
     .feedback-widget__title {
@@ -641,12 +658,12 @@ body.feedback-lock-scroll {
     }
 
     .feedback-widget__message-field textarea {
-        min-height: 120px;
-        max-height: 160px;
+        /* min-height: 112px; */
+        /* max-height: 144px; */
     }
 
     .feedback-widget__submit {
-        min-height: 44px;
+        min-height: 42px;
         font-size: 18px;
     }
 }
@@ -664,8 +681,8 @@ body.feedback-lock-scroll {
     }
 
     .feedback-widget__message-field textarea {
-        min-height: 172px;
-        max-height: 172px;
+        /* min-height: 172px; */
+        /* max-height: 172px; */
     }
 }
 
@@ -698,8 +715,8 @@ body.feedback-lock-scroll {
     }
 
     .feedback-widget__message-field textarea {
-        min-height: 136px;
-        max-height: 136px;
+        /* min-height: 136px; */
+        /* max-height: 136px; */
     }
 
     .feedback-widget__checkbox {
