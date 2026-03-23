@@ -35,7 +35,7 @@
     font-family: var(--font-body);
     font-weight: 500;
     color: var(--color-white);
-    font-size: 30px;
+    font-size: 32px;
     line-height: 1.2;
     margin-bottom: 24px;
 }
@@ -44,7 +44,7 @@
     font-family: var(--font-body);
     font-weight: 500;
     color: var(--color-white);
-    font-size: 30px;
+    font-size: 32px;
     line-height: 1.2;
     margin: 0;
 }
@@ -104,7 +104,10 @@
 /* --- Media Queries --- */
 
 @media (max-width: 1440px) {
-    /* No specific changes for 1440px yet */
+    .download-subtitle,
+    .download-bonus {
+        font-size: 28px;
+    }
 }
 
 @media (max-width: 1194px) {
@@ -112,6 +115,11 @@
 }
 
 @media (max-width: 834px) {
+    .download-subtitle,
+    .download-bonus {
+        font-size: 22px;
+    }
+
     .download-content {
         flex-direction: column;
         align-items: center;
@@ -125,5 +133,8 @@
 }
 
 @media (max-width: 480px) {
-    /* No specific changes for 480px yet */
+    .download-subtitle,
+    .download-bonus {
+        font-size: 20px;
+    }
 }

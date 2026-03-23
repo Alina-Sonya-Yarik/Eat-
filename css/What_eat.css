@@ -1,3 +1,7 @@
+.grid-12{
+    height: 47vw;
+}
+
 .what-eat {
     background-color: var(--color-bg-dark);
     border-radius: 0 0 70px 70px;
@@ -11,7 +15,7 @@
 }
 
 .what-eat-grid {
-    align-items: start;
+    align-items: stretch;
 }
 
 .what-eat-content {
@@ -19,6 +23,7 @@
     min-width: 400px;
     display: flex;
     flex-direction: column;
+    align-self: stretch;
 }
 
 .what-eat-title {
@@ -42,18 +47,18 @@
 .what-eat-details {
     font-family: var(--font-body);
     font-weight: 500;
-    font-size: 38px;
+    font-size: 32px;
     line-height: 1.2;
-    margin-bottom: 352px;
+    margin-bottom: 0;
     max-width: 28em;
 }
 
 .what-eat-tagline {
     font-family: var(--font-body);
     font-weight: 500;
-    font-size: 30px;
+    font-size: 32px;
     line-height: 1.2;
-    max-width: 28em;
+    width: 18em;
 }
 
 .what-eat-images {
@@ -133,13 +138,14 @@
     }
 
     .what-eat-details {
-        font-size: 36px;
+        font-size: 28px;
         margin-bottom: 0;
-        width: 525px;
+        width: 49vw;
     }
 
     .what-eat-tagline {
-        font-size: 26px;
+        font-size: 28px;
+        max-width: 75vw;
     }
 
     .what-eat-images {
@@ -192,13 +198,14 @@
     }
 
     .what-eat-details {
-        font-size: 28px;
+        font-size: 24px;
         margin-bottom: 0;
-        width: 500px;
+        width: 45vw;
     }
 
     .what-eat-tagline {
         font-size: 24px;
+        width: 17em;
     }
 
     .what-eat-images {
@@ -260,7 +267,7 @@
     }
 
     .what-eat-details {
-        font-size: 28px;
+        font-size: 22px;
         order: 2;
         margin-bottom: 48px;
         width: 100%;
@@ -278,8 +285,8 @@
 
     .what-eat-tagline {
         order: 4;
-        font-size: 24px;
-        max-width: 510px;
+        font-size: 22px;
+        width: 20em;
     }
 
     .what-eat-mockup-1,
@@ -328,12 +335,12 @@
         margin-left: 0px;
     }
     .what-eat-details {
-        font-size: 24px;
+        font-size: 20px;
         margin-bottom: 32px;
     }
 
     .what-eat-tagline {
-        width: 100%;
+        width: 60em;;
         font-size: 20px;
     }
 
