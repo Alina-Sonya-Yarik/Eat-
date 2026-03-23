@@ -145,10 +145,17 @@
         <section class="popular-restaurants">
             <div class="container">
                 <div class="popular-restaurants-grid grid-12">
-                    <div class="popular-header">
-                        <h2 class="popular-title">ПОПУЛЯРНЫЕ РЕСТОРАНЫ</h2>
-                        <p class="popular-description">Подобрали для тебя лучшие рестораны, которые есть<br />в нашем
-                            приложении!</p>
+                    <h2 class="popular-title">ПОПУЛЯРНЫЕ РЕСТОРАНЫ</h2>
+                    <p class="popular-description">Подобрали для тебя лучшие рестораны, которые есть в нашем
+                        приложении!</p>
+
+                    <div class="popular-controls">
+                        <button class="popular-back-button" aria-label="Предыдущий слайд">
+                            <img class="popular-back-icon" src="../svg/arrow_back.svg" alt="" />
+                        </button>
+                        <button class="popular-next-button" aria-label="Следующий слайд">
+                            <img class="popular-next-icon" src="../svg/arrow.svg" alt="" />
+                        </button>
                     </div>
 
                     <div class="popular-slider-container">
@@ -160,13 +167,9 @@
                         </div>
                     </div>
 
-                    <div class="popular-controls">
-                        <button class="popular-back-button" aria-label="Предыдущий слайд">
-                            <img class="popular-back-icon" src="../svg/arrow_back.svg" alt="" />
-                        </button>
-                        <button class="popular-next-button" aria-label="Следующий слайд">
-                            <img class="popular-next-icon" src="../svg/arrow.svg" alt="" />
-                        </button>
+                    <div class="popular-progress" role="progressbar" aria-label="Прогресс слайдера ресторанов"
+                        aria-valuemin="1" aria-valuenow="1" aria-valuemax="4">
+                        <span class="popular-progress-fill"></span>
                     </div>
                 </div>
             </div>
@@ -232,6 +235,7 @@
     <script src="../js/typography.js"></script>
     <script src="../js/layout-fix.js"></script>
     <script src="../js/sticky-fix.js"></script>
+    <script src="../js/popular-slider.js"></script>
 </body>
 
 </html>

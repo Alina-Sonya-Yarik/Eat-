@@ -5,43 +5,54 @@
     margin-top: -144px;
     z-index: 6;
     position: relative;
+    overflow: visible;
 }
 
 .popular-restaurants-grid {
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    row-gap: 40px;
-}
-
-.popular-header {
-    grid-column: span 12;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 16px;
+    row-gap: 0;
+    align-items: start;
 }
 
 .popular-title {
+    grid-column: 1 / -1;
     font-family: var(--font-heading);
-    font-weight: 800;
-    color: var(--color-white);
     font-size: 70px;
-    line-height: 84px;
+    font-weight: 800;
+    line-height: 1.1;
     margin: 0;
+    text-transform: uppercase;
+    text-align: left;
+    color: var(--color-white);
 }
 
 .popular-description {
+    grid-column: 1 / span 8;
     font-family: var(--font-body);
-    font-weight: 500;
-    color: var(--color-white);
     font-size: 30px;
-    line-height: 36px;
-    margin: 0;
-    text-align: right;
-    max-width: 892px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 80px 0 0;
+    max-width: 30ch;
+    text-align: left;
+    color: var(--color-white);
+    align-self: center;
+}
+
+.popular-controls {
+    grid-column: 9 / -1;
+    margin-top: 80px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    align-self: center;
 }
 
 .popular-slider-container {
-    grid-column: span 12;
+    grid-column: 1 / -1;
+    margin-top: 40px;
     width: 100%;
     overflow: visible;
 }
@@ -49,27 +60,48 @@
 .popular-slider {
     display: flex;
     gap: 20px;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    transition: transform 420ms ease;
+    touch-action: pan-y;
 }
 
 .popular-restaurant-card {
-    min-width: 480px;
-    height: 480px;
+    flex: 0 0 calc((100% - (16px * 11)) / 12 * 3 + (16px * 2));
+    aspect-ratio: 1 / 1;
+    height: auto;
     background-color: var(--color-white);
     border-radius: 70px;
+    min-width: 0;
 }
 
-.popular-controls {
-    grid-column: span 12;
-    display: flex;
-    justify-content: flex-end;
-    gap: 20px;
+.popular-progress {
+    grid-column: 1 / -1;
+    margin-top: 24px;
+    height: 8px;
+    border-radius: 999px;
+    background-color: rgba(255, 255, 255, 0.35);
+    overflow: hidden;
+    display: none;
+}
+
+.popular-progress-fill {
+    display: block;
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background-color: var(--color-white);
+    transition: width 320ms ease;
 }
 
 .popular-next-button,
 .popular-back-button {
-    width: auto;
-    height: 115px;
-    padding: 0 65px;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2.2 / 1;
+    min-height: 58px;
+    max-height: 100px;
+    padding: 0;
     border-radius: 48px;
     border: 4px solid var(--color-black);
     background-color: var(--color-white);
@@ -77,36 +109,198 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    transition:
+        transform 220ms ease,
+        background-color 220ms ease,
+        border-color 220ms ease,
+        box-shadow 220ms ease;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
 }
 
 .popular-back-button {
-    background-color: rgba(255, 255, 255, 0.5);
-    border-color: #424242;
+    grid-column: 1 / span 2;
+    background-color: var(--color-white);
+    border-color: var(--color-black);
+}
+
+.popular-next-button {
+    grid-column: 3 / span 2;
+}
+
+.popular-back-icon,
+.popular-next-icon {
+    width: auto;
+    height: 44%;
+    min-height: 16px;
+    max-height: 40px;
+    flex: 0 0 auto;
+    filter: brightness(0) saturate(100%);
+    transition: transform 220ms ease, filter 220ms ease;
+}
+
+.popular-next-button:hover,
+.popular-back-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 0 rgba(0, 0, 0, 0.22);
+}
+
+.popular-next-button:hover .popular-next-icon,
+.popular-back-button:hover .popular-back-icon {
+    transform: scale(1.08);
+}
+
+.popular-next-button:active,
+.popular-back-button:active {
+    background-color: var(--color-primary);
+    border-color: var(--color-white);
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);
+}
+
+.popular-next-button:active .popular-next-icon,
+.popular-back-button:active .popular-back-icon {
+    filter: brightness(0) invert(1);
+}
+
+.popular-next-button:focus-visible,
+.popular-back-button:focus-visible {
+    outline: none;
+    box-shadow:
+        0 0 0 4px rgba(255, 255, 255, 0.8),
+        0 6px 0 rgba(0, 0, 0, 0.2);
 }
 
 /* --- Media Queries --- */
 
 @media (max-width: 1440px) {
-    /* No specific changes for 1440px yet */
-}
+    .popular-title {
+        font-size: 60px;
+    }
 
-@media (max-width: 1194px) {
-    /* No specific changes for 1194px yet */
-}
-
-@media (max-width: 834px) {
-    .popular-header {
-        flex-direction: column;
-        align-items: flex-start;
-        text-align: left;
+    .popular-description,
+    .popular-controls {
+        margin-top: 72px;
     }
 
     .popular-description {
-        text-align: left;
-        margin-top: 20px;
+        font-size: 28px;
+    }
+
+}
+
+@media (max-width: 1194px) {
+    .popular-title {
+        font-size: 52px;
+    }
+
+    .popular-description,
+    .popular-controls {
+        margin-top: 64px;
+    }
+
+    .popular-description {
+        grid-column: 1 / span 7;
+        font-size: 26px;
+    }
+
+    .popular-controls {
+        grid-column: 8 / -1;
+    }
+
+    .popular-next-button,
+    .popular-back-button {
+        border-radius: 42px;
+    }
+
+    .popular-restaurant-card {
+        flex-basis: calc((100% - (16px * 11)) / 12 * 4 + (16px * 3));
+        border-radius: 52px;
+    }
+}
+
+@media (max-width: 834px) {
+    .popular-restaurants {
+        border-radius: 0 0 50px 50px;
+    }  
+    .popular-restaurants-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        row-gap: 0;
+    }
+
+    .popular-title {
+        grid-column: 1 / -1;
+        font-size: 50px;
+    }
+
+    .popular-description {
+        grid-column: 1 / -1;
+        margin-top: 64px;
+        font-size: 28px;
+        max-width: 28ch;
+    }
+
+    .popular-controls {
+        grid-column: 1 / -1;
+        margin-top: 32px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .popular-back-button,
+    .popular-next-button {
+        grid-column: span 1;
+        border-radius: 40px;
+    }
+
+    .popular-slider-container {
+        grid-column: 1 / -1;
+        margin-top: 32px;
+    }
+
+    .popular-slider {
+        gap: 16px;
+    }
+
+    .popular-restaurant-card {
+        flex-basis: calc((100% - 16px) / 2);
+        border-radius: 50px;
     }
 }
 
 @media (max-width: 480px) {
-    /* No specific changes for 480px yet */
+    .popular-restaurants {
+        border-radius: 0 0 32px 32px;
+    }
+
+    .popular-restaurants-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .popular-title {
+        font-size: 40px;
+    }
+
+    .popular-description {
+        grid-column: 1 / -1;
+        margin-top: 56px;
+        font-size: 20px;
+        line-height: 1.3;
+        max-width: 100%;
+    }
+
+    .popular-controls {
+        grid-column: 1 / -1;
+        margin-top: 24px;
+        gap: 12px;
+    }
+
+    .popular-back-button,
+    .popular-next-button {
+        border-width: 3px;
+        border-radius: 32px;
+    }
+
+    .popular-restaurant-card {
+        flex-basis: 100%;
+        border-radius: 32px;
+    }
 }
