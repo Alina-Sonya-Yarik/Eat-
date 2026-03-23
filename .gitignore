@@ -8,6 +8,7 @@
 .env.production
 .env.test
 *.local
+js/supabase-config.local.js
 
 # Supabase local CLI state
 .supabase

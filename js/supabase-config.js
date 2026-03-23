@@ -10,9 +10,10 @@
         return;
     }
 
-    // Local fallback when the runtime config is not provided by Vercel.
+    // Safe default config. For local development you can create
+    // js/supabase-config.local.js based on js/supabase-config.local.example.js.
     window.SUPABASE_CONFIG = {
-        url: 'https://kgqgamlizrrpngdhcyhv.supabase.co',
-        anonKey: 'sb_publishable_rNCmgTB-VZFOOlB-8jX2zw_uEypjfI6',
+        url: '',
+        anonKey: '',
     };
 })();
