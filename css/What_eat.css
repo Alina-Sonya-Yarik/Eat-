@@ -254,6 +254,7 @@
     }
 
     .what-eat-title {
+        font-size: 50px;
         order: 1;
         margin-bottom: 40px;
     }
@@ -278,7 +279,7 @@
     .what-eat-tagline {
         order: 4;
         font-size: 24px;
-        width: 600px;
+        max-width: 510px;
     }
 
     .what-eat-mockup-1,

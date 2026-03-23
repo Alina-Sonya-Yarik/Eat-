@@ -118,3 +118,74 @@
 @media (max-width: 480px) {
     /* No specific changes for 480px yet */
 }
+
+/* Unified vertical section spacing scale (desktop/laptop/tablet/phone) */
+:root {
+    --section-pad-desktop: 128px;
+    --section-pad-laptop: 96px;
+    --section-pad-tablet: 80px;
+    --section-pad-phone: 64px;
+    --section-overlap-offset: 144px;
+}
+
+.what-eat,
+.cashback,
+.how-it-works,
+.popular-restaurants,
+.download,
+.footer {
+    padding-top: calc(var(--section-pad-desktop) + var(--section-overlap-offset));
+    padding-bottom: var(--section-pad-desktop);
+}
+
+.hero-section {
+    padding-bottom: var(--section-pad-desktop);
+}
+
+@media (max-width: 1440px) {
+    .what-eat,
+    .cashback,
+    .how-it-works,
+    .popular-restaurants,
+    .download,
+    .footer {
+        padding-top: calc(var(--section-pad-laptop) + var(--section-overlap-offset));
+        padding-bottom: var(--section-pad-laptop);
+    }
+
+    .hero-section {
+        padding-bottom: var(--section-pad-laptop);
+    }
+}
+
+@media (max-width: 1194px) {
+    .what-eat,
+    .cashback,
+    .how-it-works,
+    .popular-restaurants,
+    .download,
+    .footer {
+        padding-top: calc(var(--section-pad-tablet) + var(--section-overlap-offset));
+        padding-bottom: var(--section-pad-tablet);
+    }
+
+    .hero-section {
+        padding-bottom: var(--section-pad-tablet);
+    }
+}
+
+@media (max-width: 480px) {
+    .what-eat,
+    .cashback,
+    .how-it-works,
+    .popular-restaurants,
+    .download,
+    .footer {
+        padding-top: calc(var(--section-pad-phone) + var(--section-overlap-offset));
+        padding-bottom: var(--section-pad-phone);
+    }
+
+    .hero-section {
+        padding-bottom: var(--section-pad-phone);
+    }
+}

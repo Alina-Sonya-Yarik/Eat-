@@ -5,13 +5,14 @@
     margin-top: -144px;
     z-index: 7;
     position: relative;
+    --how-step-description-height: 108px;
 }
 
 .how-it-works-grid {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    row-gap: 80px;
-    column-gap: 20px;
+    row-gap: 64px;
+    column-gap: 32px;
 }
 
 .how-title {
@@ -22,7 +23,7 @@
     font-size: 70px;
     margin: 0;
     text-transform: uppercase;
-    text-align: center;
+    text-align: left;
 }
 
 .how-step {
@@ -32,14 +33,17 @@
     align-items: center;
     text-align: center;
     gap: 30px;
+    min-width: 0;
+    padding-inline: 14px;
 }
 
 .how-step-number {
     font-family: var(--font-body);
     font-weight: 700;
     color: var(--color-white);
-    font-size: 150px;
+    font-size: clamp(110px, 8.4vw, 150px);
     line-height: 1;
+    white-space: nowrap;
 }
 
 .how-step-description {
@@ -48,11 +52,19 @@
     color: var(--color-white);
     font-size: 30px;
     line-height: 36px;
-    min-height: 72px;
+    width: 100%;
+    min-height: var(--how-step-description-height);
+    height: auto;
+    display: block;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
 }
 
 .how-step-image {
-    max-width: 100%;
+    max-width: min(100%, 250px);
     height: auto;
     object-fit: contain;
     margin-top: auto;
@@ -64,30 +76,174 @@
     font-family: var(--font-body);
     font-weight: 500;
     color: var(--color-white);
-    font-size: 30px;
+    font-size: 28px;
     line-height: 1.2;
     text-align: left;
     margin-top: 40px;
+    max-width: 30em;
 }
 
 /* --- Media Queries --- */
 
 @media (max-width: 1440px) {
-    /* No specific changes for 1440px yet */
+    .how-step-number {
+        font-size: clamp(96px, 9.2vw, 130px);
+    }
+
+    .how-title {
+        font-size: 60px;
+    }
 }
 
 @media (max-width: 1194px) {
-    /* No specific changes for 1194px yet */
+    .how-it-works {
+        --how-step-description-height: 126px;
+    }
+
+    .how-title {
+        font-size: 52px;
+    }
+
+    .how-it-works-grid {
+        row-gap: 56px;
+        column-gap: 24px;
+    }
+
+    .how-step {
+        gap: 24px;
+        padding-inline: 8px;
+    }
+
+    .how-step-number {
+        font-size: clamp(82px, 8.2vw, 104px);
+    }
+
+    .how-step-description {
+        font-size: 26px;
+        line-height: 32px;
+    }
 }
 
 @media (max-width: 834px) {
+    .how-it-works {
+        --how-step-description-height: 86px;
+    }
+
+    .how-title {
+        font-size: 50px;
+    }
+
+    .how-it-works-grid {
+        row-gap: 48px;
+        column-gap: 20px;
+    }
+
     .how-step {
-        grid-column: span 6;
+        grid-column: span 12;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-areas:
+            "number image"
+            "description image";
+        align-items: stretch;
+        row-gap: 14px;
+        column-gap: 20px;
+        padding-inline: 0;
+        text-align: left;
+    }
+
+    .how-step-second,
+    .how-step-fourth {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-areas:
+            "image number"
+            "image description";
+        text-align: right;
+    }
+
+    .how-step-number {
+        grid-area: number;
+        font-size: clamp(84px, 15vw, 120px);
+        align-self: end;
+        justify-self: start;
+        text-align: left;
+        line-height: 0.9;
+    }
+
+    .how-step-description {
+        grid-area: description;
+        align-self: start;
+        text-align: left;
+        font-size: 30px;
+        line-height: 34px;
+        min-height: 0;
+    }
+
+    .how-step-description br {
+        display: block;
+    }
+
+    .how-step-second .how-step-number,
+    .how-step-fourth .how-step-number,
+    .how-step-second .how-step-description,
+    .how-step-fourth .how-step-description {
+        justify-self: end;
+        text-align: right;
+    }
+
+    .how-step-image {
+        grid-area: image;
+        width: 100%;
+        max-width: 100%;
+        justify-self: stretch;
+        margin: 0;
+    }
+
+    .how-step-second .how-step-image,
+    .how-step-fourth .how-step-image {
+        justify-self: stretch;
     }
 }
 
 @media (max-width: 480px) {
+    .how-it-works {
+        --how-step-description-height: 84px;
+    }
+    .how-title {
+        font-size: 40px;
+    }
+    .how-it-works-grid {
+        row-gap: 32px;
+    }
+
     .how-step {
         grid-column: span 12;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 12px;
+        row-gap: 12px;
+    }
+
+    .how-step-second,
+    .how-step-fourth {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .how-step-number {
+        font-size: clamp(72px, 19vw, 92px);
+    }
+
+    .how-step-description {
+        font-size: 20px;
+        line-height: 26px;
+    }
+
+    .how-step-image {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .how-description {
+        font-size: 20px;
+        max-width: 16em;
     }
 }
