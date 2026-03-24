@@ -236,9 +236,11 @@
         grid-template-rows: auto auto auto auto;
         row-gap: 16px;
     }
-
+    .cashback-upper-text{
+        font-size: clamp(20px, 1.7vw + 8px, 30px);
+    }
     .cashback-lower-text {
-        font-size: clamp(18px, 1.7vw + 8px, 30px);
+        font-size: clamp(20px, 1.7vw + 8px, 30px);
     }
     .cashback-upper-text,
     .cashback-lower-text {

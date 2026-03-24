@@ -50,7 +50,7 @@
     font-size: 32px;
     line-height: 1.2;
     margin-bottom: 0;
-    width: 39vw;
+    width: 36vw;
 }
 
 .what-eat-tagline {
@@ -146,7 +146,7 @@
 
     .what-eat-tagline {
         font-size: 28px;
-        max-width: 75vw;
+        width: 47vw;
         margin-bottom: 0;
     }
 
@@ -343,7 +343,7 @@
     }
 
     .what-eat-tagline {
-        width: 60em;;
+        width: 21em;;
         font-size: 20px;
     }
 
