@@ -302,7 +302,20 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="/api/supabase-config"></script>
+    <script>
+        (() => {
+            const localHosts = new Set(['localhost', '127.0.0.1', '::1']);
+            const isLocalDevHost = localHosts.has(window.location.hostname);
+
+            window.APP_ENABLE_SERVER_API = !isLocalDevHost;
+
+            if (!window.APP_ENABLE_SERVER_API) {
+                return;
+            }
+
+            document.write('<script src="/api/supabase-config"><\\/script>');
+        })();
+    </script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-config.local.js" onerror="this.remove()"></script>
     <script src="../js/supabase-client.js"></script>

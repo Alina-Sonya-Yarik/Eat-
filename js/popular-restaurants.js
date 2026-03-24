@@ -107,6 +107,48 @@
         },
     ];
 
+    function getAbsoluteUrl(value) {
+        const source = String(value || '').trim();
+
+        if (!source) {
+            return '';
+        }
+
+        try {
+            return new URL(source, window.location.href).toString();
+        } catch {
+            return '';
+        }
+    }
+
+    function getPreferredImageUrl(imageUrl) {
+        const absoluteUrl = getAbsoluteUrl(imageUrl);
+
+        if (!absoluteUrl) {
+            return '';
+        }
+
+        if (window.APP_ENABLE_SERVER_API === false) {
+            return absoluteUrl;
+        }
+
+        try {
+            const parsedUrl = new URL(absoluteUrl);
+            const isSupabaseStorageUrl =
+                parsedUrl.protocol === 'https:' &&
+                parsedUrl.hostname.endsWith('.supabase.co') &&
+                parsedUrl.pathname.startsWith('/storage/v1/object/');
+
+            if (!isSupabaseStorageUrl) {
+                return absoluteUrl;
+            }
+
+            return `/api/storage-image?src=${encodeURIComponent(absoluteUrl)}`;
+        } catch {
+            return absoluteUrl;
+        }
+    }
+
     function escapeHtml(value) {
         return String(value ?? '')
             .replace(/&/g, '&amp;')
@@ -117,12 +159,33 @@
     }
 
     function buildMediaMarkup(imageUrl, index) {
-        const safeUrl = String(imageUrl || '').trim();
-        const imageMarkup = safeUrl
-            ? `<img src="${escapeHtml(safeUrl)}" alt="" loading="eager" decoding="async" />`
+        const originalUrl = getAbsoluteUrl(imageUrl);
+        const preferredUrl = getPreferredImageUrl(imageUrl);
+        const imageMarkup = preferredUrl
+            ? `<img src="${escapeHtml(preferredUrl)}" data-original-src="${escapeHtml(originalUrl)}" alt="" loading="eager" decoding="async" />`
             : '';
 
         return `<div class="popular-card__media popular-card__media--${index}">${imageMarkup}</div>`;
+    }
+
+    function bindImageFallbacks() {
+        track.querySelectorAll('.popular-card__media img').forEach(image => {
+            if (image.dataset.fallbackBound === 'true') {
+                return;
+            }
+
+            image.dataset.fallbackBound = 'true';
+            image.addEventListener('error', () => {
+                const originalSrc = image.dataset.originalSrc || '';
+
+                if (!originalSrc || image.dataset.fallbackApplied === 'true' || image.currentSrc === originalSrc) {
+                    return;
+                }
+
+                image.dataset.fallbackApplied = 'true';
+                image.src = originalSrc;
+            });
+        });
     }
 
     function createCardMarkup(restaurant) {
@@ -160,6 +223,7 @@
     function renderRestaurants(restaurants) {
         const items = Array.isArray(restaurants) && restaurants.length ? restaurants : fallbackRestaurants;
         track.innerHTML = items.map(createCardMarkup).join('');
+        bindImageFallbacks();
 
         if (description && (!Array.isArray(restaurants) || !restaurants.length)) {
             description.textContent = 'Пока используем демонстрационные карточки. После заполнения таблицы restaurants данные подтянутся автоматически.';
