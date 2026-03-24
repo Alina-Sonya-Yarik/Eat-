@@ -240,7 +240,7 @@
         font-size: clamp(20px, 1.7vw + 8px, 30px);
     }
     .cashback-lower-text {
-        font-size: clamp(20px, 1.7vw + 8px, 30px);
+        font-size: clamp(17px, 1.7vw + 8px, 30px);
     }
     .cashback-upper-text,
     .cashback-lower-text {
@@ -260,7 +260,7 @@
 
     .cashback-ticket-content {
         inset: 10% 23% 12% 7%;
-        transform: translateY(-0%);
+        transform: translateY(3%);
     }
 
     .cashback-ticket-label {
