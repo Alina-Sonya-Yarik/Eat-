@@ -68,13 +68,20 @@
 .cashback-ticket-content {
     position: absolute;
     inset: 7.5% 27.5% 9% 7.25%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: clamp(2px, 0.8cqi, 12px);
     text-align: left;
     z-index: 5;
+}
+
+.cashback-ticket-copy {
+    position: absolute;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: clamp(2px, 0.8cqi, 12px);
+    width: max-content;
+    transform-origin: left top;
+    will-change: transform;
 }
 
 .cashback-ticket-label,
