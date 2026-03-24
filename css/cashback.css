@@ -260,7 +260,7 @@
 
     .cashback-ticket-content {
         inset: 10% 23% 9% 7%;
-        /* transform: translateY(3%); */
+        transform: translateY(3%);
     }
 
     .cashback-ticket-label {
