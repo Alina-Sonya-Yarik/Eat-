@@ -107,6 +107,10 @@
     box-shadow: inset 0 0 0 4px var(--color-black);
     pointer-events: none;
     z-index: 3;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .popular-card__media {
@@ -161,6 +165,10 @@
         linear-gradient(180deg, rgba(24, 24, 24, 0.06) 0%, rgba(24, 24, 24, 0.2) 42%, rgba(24, 24, 24, 0.92) 100%);
     transition: background 360ms ease;
     z-index: 2;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .popular-card__eyebrow {
@@ -197,6 +205,34 @@
     opacity: 0.96;
 }
 
+@media (hover: hover) {
+    .popular-restaurant-card:hover,
+    .popular-restaurant-card:focus-within {
+        z-index: 8;
+        box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
+    }
+
+    .popular-restaurant-card:hover .popular-card__media,
+    .popular-restaurant-card:focus-within .popular-card__media {
+        transform: translateZ(0) scale(1.045);
+    }
+
+    .popular-restaurant-card:hover .popular-card__title,
+    .popular-restaurant-card:focus-within .popular-card__title {
+        transform: translateY(-2px);
+    }
+
+    .popular-restaurant-card:nth-child(odd):hover,
+    .popular-restaurant-card:nth-child(odd):focus-within {
+        transform: translate3d(var(--card-shift-x), var(--card-shift-y), 0) scale(1.04) rotate(-5deg);
+    }
+
+    .popular-restaurant-card:nth-child(even):hover,
+    .popular-restaurant-card:nth-child(even):focus-within {
+        transform: translate3d(var(--card-shift-x), var(--card-shift-y), 0) scale(1.04) rotate(5deg);
+    }
+}
+
 @media (min-width: 1195px) {
     .popular-restaurant-card {
         z-index: 1;
@@ -216,22 +252,6 @@
         overflow: hidden;
     }
 
-    .popular-restaurant-card:hover,
-    .popular-restaurant-card:focus-within {
-        z-index: 8;
-        box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
-    }
-
-    .popular-restaurant-card:hover .popular-card__media,
-    .popular-restaurant-card:focus-within .popular-card__media {
-        transform: translateZ(0) scale(1.045);
-    }
-
-    .popular-restaurant-card:hover .popular-card__title,
-    .popular-restaurant-card:focus-within .popular-card__title {
-        transform: translateY(-2px);
-    }
-
     .popular-restaurant-card:hover .popular-card__eyebrow,
     .popular-restaurant-card:hover .popular-card__summary,
     .popular-restaurant-card:focus-within .popular-card__eyebrow,
@@ -246,15 +266,6 @@
         max-height: 9.5em;
     }
 
-    .popular-restaurant-card:nth-child(odd):hover,
-    .popular-restaurant-card:nth-child(odd):focus-within {
-        transform: translate3d(var(--card-shift-x), var(--card-shift-y), 0) scale(1.04) rotate(-5deg);
-    }
-
-    .popular-restaurant-card:nth-child(even):hover,
-    .popular-restaurant-card:nth-child(even):focus-within {
-        transform: translate3d(var(--card-shift-x), var(--card-shift-y), 0) scale(1.04) rotate(5deg);
-    }
 }
 
 .popular-progress {
