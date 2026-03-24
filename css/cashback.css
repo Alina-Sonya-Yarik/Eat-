@@ -236,6 +236,9 @@
         row-gap: 16px;
     }
 
+    .cashback-lower-text {
+        font-size: clamp(16px, 1.7vw + 8px, 30px);
+    }
     .cashback-upper-text,
     .cashback-lower-text {
         max-width: 100%;
