@@ -2,7 +2,8 @@
 :root {
     /* Typography */
     --font-heading: "Geologica", "Geologica-ExtraBold", Helvetica, sans-serif;
-    --font-body: "Stapel", "Stapel Medium", "Stapel Bold", Helvetica, sans-serif;
+    --font-body: "Onest", "Stapel", "Stapel Medium", "Stapel Bold", Helvetica, sans-serif;
+    --container-gutter: 80px;
 
     /* Colors */
     --color-primary: #d01651;
@@ -57,9 +58,8 @@ section {
 }
 
 .container {
-    max-width: calc(100% - 160px);
+    width: min(1440px, calc(100% - (var(--container-gutter) * 2)));
     margin: 0 auto;
-    width: 100%;
 }
 
 .grid-12 {
@@ -117,26 +117,26 @@ span {
 /* --- Media Queries --- */
 
 @media (max-width: 1440px) {
-    .container {
-        max-width: calc(100% - 160px);
+    :root {
+        --container-gutter: 56px;
     }
 }
 
 @media (max-width: 1194px) {
-    .container {
-         max-width: calc(100% - 128px);
+    :root {
+        --container-gutter: 36px;
     }
 }
 
 @media (max-width: 834px) {
-    .container {
-        max-width: calc(100% - 64px);
+    :root {
+        --container-gutter: 24px;
     }
 }
 
 @media (max-width: 480px) {
-    .container {
-    max-width: calc(100% - 64px);
+    :root {
+        --container-gutter: 16px;
     }
 
     .grid-12 {
