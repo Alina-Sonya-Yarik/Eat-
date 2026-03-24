@@ -67,7 +67,7 @@
 
 .cashback-ticket-content {
     position: absolute;
-    inset: 7.5% 27.5% 9% 7.25%;
+    inset: 0.5% 27.5% 3% 7.25%;
     text-align: left;
     z-index: 5;
 }
@@ -96,14 +96,14 @@
 
 .cashback-ticket-label {
     font-weight: 800;
-    font-size: clamp(48px, 14cqi, 400px);
+    font-size: clamp(48px, 15cqi, 400px);
     line-height: 0.9;
     margin: 0;
 }
 
 .cashback-ticket-value {
     font-weight: 700;
-    font-size: clamp(66px, 30cqi, 573px);
+    font-size: clamp(66px, 31cqi, 573px);
     line-height: 0.84;
     margin-top: 0;
 }
