@@ -81,6 +81,8 @@ body {
     background-color: var(--color-white);
     font-family: var(--font-body);
     font-weight: 500;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 

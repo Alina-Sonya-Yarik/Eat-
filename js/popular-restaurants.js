@@ -8,6 +8,7 @@
     const track = section.querySelector('.popular-slider');
     const description = section.querySelector('.popular-description');
     const interactiveMediaQuery = window.matchMedia('(min-width: 1195px) and (hover: hover) and (pointer: fine)');
+    let restaurantsChannel = null;
 
     if (!track) {
         return;
@@ -176,6 +177,16 @@
         card.classList.add('is-zone-1');
     }
 
+    function resetAllCards() {
+        track.querySelectorAll('.popular-restaurant-card').forEach(card => {
+            resetCardMotion(card);
+
+            if (document.activeElement instanceof HTMLElement && card.contains(document.activeElement)) {
+                document.activeElement.blur();
+            }
+        });
+    }
+
     function updateCardMotion(card, event) {
         if (!card || !interactiveMediaQuery.matches) {
             resetCardMotion(card);
@@ -202,6 +213,18 @@
     }
 
     function bindCardInteractions() {
+        track.addEventListener('click', event => {
+            const card = event.target instanceof Element
+                ? event.target.closest('.popular-restaurant-card--clickable')
+                : null;
+
+            if (!card) {
+                return;
+            }
+
+            resetAllCards();
+        });
+
         track.addEventListener('pointermove', event => {
             const card = event.target instanceof Element
                 ? event.target.closest('.popular-restaurant-card')
@@ -215,7 +238,7 @@
         });
 
         track.addEventListener('pointerleave', () => {
-            track.querySelectorAll('.popular-restaurant-card').forEach(resetCardMotion);
+            resetAllCards();
         });
 
         track.addEventListener('pointerout', event => {
@@ -232,7 +255,11 @@
         });
 
         interactiveMediaQuery.addEventListener('change', () => {
-            track.querySelectorAll('.popular-restaurant-card').forEach(resetCardMotion);
+            resetAllCards();
+        });
+
+        window.addEventListener('pageshow', () => {
+            resetAllCards();
         });
     }
 
@@ -266,6 +293,33 @@
         }
     }
 
+    function subscribeToRestaurants() {
+        const supabaseApi = window.appSupabase;
+        const client = supabaseApi && typeof supabaseApi.getClient === 'function'
+            ? supabaseApi.getClient()
+            : null;
+
+        if (!client || typeof client.channel !== 'function') {
+            return;
+        }
+
+        if (restaurantsChannel && typeof client.removeChannel === 'function') {
+            client.removeChannel(restaurantsChannel);
+        }
+
+        restaurantsChannel = client
+            .channel('public:restaurants')
+            .on(
+                'postgres_changes',
+                { event: '*', schema: 'public', table: 'restaurants' },
+                () => {
+                    loadRestaurants();
+                }
+            )
+            .subscribe();
+    }
+
     bindCardInteractions();
     loadRestaurants();
+    subscribeToRestaurants();
 })();

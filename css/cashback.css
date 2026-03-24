@@ -32,6 +32,8 @@
     max-width: min(1060px, 92%);
     position: relative;
     z-index: 5;
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
 }
 
 .cashback-upper-text {
@@ -81,6 +83,8 @@
     font-family: var(--font-body);
     color: var(--color-black);
     white-space: nowrap;
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
 }
 
 .cashback-ticket-label {
