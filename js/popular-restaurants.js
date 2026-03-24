@@ -117,11 +117,11 @@
 
     function buildMediaMarkup(imageUrl, index) {
         const safeUrl = String(imageUrl || '').trim();
-        const style = safeUrl
-            ? ` style="background-image: linear-gradient(180deg, rgba(24, 24, 24, 0.04), rgba(24, 24, 24, 0.38)), url('${escapeHtml(safeUrl)}');"`
+        const imageMarkup = safeUrl
+            ? `<img src="${escapeHtml(safeUrl)}" alt="" loading="eager" decoding="async" />`
             : '';
 
-        return `<div class="popular-card__media popular-card__media--${index}"${style}></div>`;
+        return `<div class="popular-card__media popular-card__media--${index}">${imageMarkup}</div>`;
     }
 
     function createCardMarkup(restaurant) {
